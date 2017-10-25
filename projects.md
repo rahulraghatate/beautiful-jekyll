@@ -16,10 +16,8 @@ This is a collection of some personal/collaborative projects I've worked on.
 -  **[Ads-Click-Prediction](https://github.com/rahulraghatate/Ads-Click-Prediction)**
 -  **[Customer Lifetime Value](https://github.com/rahulraghatate/code-challenge/tree/master/src)**
 -  **[Manhattan-Properties-Analysis](https://github.com/rahulraghatate/Manhattan-Properties-Sale-Analysis)**
----
-### R 
 
-- 
+---
 
 ---
 
@@ -33,9 +31,11 @@ This is a collection of some personal/collaborative projects I've worked on.
 -
 
 ---
+
 ### SAS
 
 - **[Factors-affecting-GHG-Emissions-in-US](https://github.com/rahulraghatate/Factors-affecting-GHG-Emissions-in-US)**
+
 ---
 
 ### Technical Reports
