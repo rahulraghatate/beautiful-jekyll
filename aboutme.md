@@ -1,23 +1,24 @@
 ---
 layout: page
 title: About me
-subtitle: Former Data Specialist(IBM) > Data Science Major > Machine Learning Enthusiast > Aspiring Data Scientist 
+subtitle: Data Scientist and Researcher | Seeking Full-time Opportunities 
 ---
 
-My name is Rahul Vijay Raghatate. I am a data science consultant with a passion for statistics and programming. 
-I specialise primarily in R and Python.
+My name is Rahul Vijay Raghatate passionate about applying statistics and machine learning to deliver business value. 
 
-## Education
+### Education
 
 - Masters in Data Science, Indiana University, USA - 2018
 - Bachelors in Electronics, VJTI, INDIA - 2014
 
-## Work Experience
+### Work Experience
 
-- Former Data Specialist with newly acquired statistical and machine learning skills.
-- Passionate about applying technology and statistics to deliver business value. 
+- Data Analytics Consultant at The Harlem Bee,NYC.
+- Graduate Research Assistant (Speech Signal Processing)
+- Associate Instructor (INFO-I427 Search Informatics) at Indiana University.
+- Former Data Specialist at IBM (2014-2016) 
 
-## Key Strengths:
+### Key Strengths:
 
 - Experience building, testing and deploying data-driven applications
 -	Understanding in probabilistic/statistical methods
@@ -26,22 +27,24 @@ I specialise primarily in R and Python.
 - Well-versed in collection and analysis of data using various statistical programs
 - Adept at using various multipurpose data analysis software
 
-## Interests
+### Interests
 
-- Statistics (R)
+- Statistics
 - Machine Learning
-- Speech Processing
+- Speech Signal Processing
 - Deep learning and Neural Networks
+- Big Data Analytics and Applications
 - Data Mining
 - Data Exploration and Visualization
 - Artificial Intelligence
 - Natural Language Processing
 
+### Tools/Skills
 
-## Highlights
+• Unix • Python • R • Matlab • SAS • Tableau • Abinitio • Teradata • Spark • Ansible • Emacs • SQL • Tensorflow • Excel • ETL/EDW Management • Agile Methodology 
 
-
-## Contact Details
+### Contact Details
 
 ✉ rvraghatate10@gmail.com
+
 ✆ +1-812-325-6756
