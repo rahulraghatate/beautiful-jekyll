@@ -1,0 +1,46 @@
+---
+layout: page
+title: Projects
+subtitle: "Time Well Spent"
+comments: true
+---
+
+This is a collection of some personal/collaborative projects I've worked on.
+
+---
+### Python
+
+-  **[House Sale Price Prediction](https://github.com/rahulraghatate/Housing-Sale-Price-Prediction/blob/master/House%20Prices%20V2.ipynb)** 
+-  **[Manhattan-Crime-Analysis](https://github.com/rahulraghatate/Manhattan-Crime-Analysis/blob/master/Manhattan%2BCrime%2BAnalysis_v2.ipynb)**
+-  **[Breast Cancer Diagnosis](https://github.com/rahulraghatate/Predictive-Analysis-Model-for-Breast-Cancer-Diagnosis)** 
+-  **[Ads-Click-Prediction](https://github.com/rahulraghatate/Ads-Click-Prediction)**
+-  **[Customer Lifetime Value](https://github.com/rahulraghatate/code-challenge/tree/master/src)**
+-  **[Manhattan-Properties-Analysis](https://github.com/rahulraghatate/Manhattan-Properties-Sale-Analysis)**
+---
+### R 
+
+- 
+
+---
+
+### Cloud/Big Data Project
+- **[STOP SIGN DETECTION IN IMAGE AND VIDEO STREAMS USING SPARK](https://github.com/cloudmesh/cloudmesh.street)**
+
+---
+
+### Matlab
+
+-
+
+---
+### SAS
+
+- **[Factors-affecting-GHG-Emissions-in-US](https://github.com/rahulraghatate/Factors-affecting-GHG-Emissions-in-US)**
+---
+
+### Technical Reports
+
+- **[CEPH - Distributed Storage System](https://github.com/rahulraghatate/sp17-i524/blob/master/paper1/S17-IR-2026/report.pdf)**
+- **[NAIAD - Microsoft's Distributed System based on computational model - "Timely dataflow"](https://github.com/rahulraghatate/sp17-i524/blob/master/paper2/S17-IR-2026/report.pdf)**
+- **[Overview of Apache Spark](https://github.com/rahulraghatate/sp17-i524/blob/master/paper2/S17-IR-2006/report.pdf)**
+- **[Machine_Learning_Case_Studies](https://github.com/rahulraghatate/Technical-Reports-Case-Studies/blob/master/Machine_Learning_Case_Study_Report.pdf)**
