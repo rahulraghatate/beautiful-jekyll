@@ -4,7 +4,7 @@ title: About me
 subtitle: Data Scientist and Researcher | Seeking Full-time Opportunities 
 ---
 
-My name is Rahul Vijay Raghatate passionate about applying statistics and machine learning to deliver business value. 
+My name is Rahul Vijay Raghatate and I am passionate about applying statistics and machine learning to deliver business value. 
 
 ### Education
 
