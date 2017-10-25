@@ -1,16 +1,47 @@
 ---
 layout: page
 title: About me
-subtitle: Why you'd want to go on a date with me
+subtitle: Former Data Specialist(IBM) > Data Science Major > Machine Learning Enthusiast > Aspiring Data Scientist 
 ---
 
-My name is Inigo Montoya. I have the following qualities:
+My name is Rahul Vijay Raghatate. I am a data science consultant with a passion for statistics and programming. 
+I specialise primarily in R and Python.
 
-- I rock a great mustache
-- I'm extremely loyal to my family
+## Education
 
-What else do you need?
+- Masters in Data Science, Indiana University, USA - 2018
+- Bachelors in Electronics, VJTI, INDIA - 2014
 
-### my history
+## Work Experience
 
-To be honest, I'm having some trouble remembering right now, so why don't you just watch [my movie](http://en.wikipedia.org/wiki/The_Princess_Bride_%28film%29) and it will answer **all** your questions.
+- Former Data Specialist with newly acquired statistical and machine learning skills.
+- Passionate about applying technology and statistics to deliver business value. 
+
+## Key Strengths:
+
+- Experience building, testing and deploying data-driven applications
+-	Understanding in probabilistic/statistical methods
+-	Proficiency in Python, R, Shell Scripting
+-	Proven success in model building in conjunction with applied machine learning
+- Well-versed in collection and analysis of data using various statistical programs
+- Adept at using various multipurpose data analysis software
+
+## Interests
+
+- Statistics (R)
+- Machine Learning
+- Speech Processing
+- Deep learning and Neural Networks
+- Data Mining
+- Data Exploration and Visualization
+- Artificial Intelligence
+- Natural Language Processing
+
+
+## Highlights
+
+
+## Contact Details
+
+✉ rvraghatate10@gmail.com
+✆ +1-812-325-6756
