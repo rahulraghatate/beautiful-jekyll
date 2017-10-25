@@ -23,7 +23,7 @@ description: Data Scientist
 
 # List of links in the navigation bar
 navbar-links:
-  Home:""
+  Home: ""
   Projects: "projects"
   About Me: "aboutme"
   #Resources:
@@ -63,7 +63,6 @@ author:
   twitter: rahul_raghatate
   linkedin: rahulraghatate
   facebook: rahulraghatate10
-  #instagram: yourname # eg. daattali
   telephone: +18123256756
 
 # Select which links to show in the footer
@@ -84,7 +83,7 @@ share-links-active:
 
 # How to display the link to the website in the footer
 # Remove this if you don't want a link in the footer
-#url-pretty: "MyWebsite.com"  # eg. "deanattali.com/beautiful-jekyll"
+# url-pretty: "MyWebsite.com"  # eg. "deanattali.com/beautiful-jekyll"
 
 # --- Misc --- #
 # Fill in your Disqus shortname (NOT the userid) if you want to support Disqus comments
