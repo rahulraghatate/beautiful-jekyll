@@ -1,11 +1,12 @@
 ---
 layout: page
 title: About me
-subtitle: Data Scientist and Researcher | Seeking Full-time Opportunities 
+subtitle: Data Scientist and Researcher
 ---
 
 My name is Rahul Vijay Raghatate and I am a Data Enthusiast with business acumen specialized in machine learning algorithms and statistical modeling and analysis. Currently, I am inclined towards Deep Learning and Neural Network implementation in spectrum of domains. I am working on DNN based speech separation and speaker recognition system as my research project under Prof. Donald Williamson at Indiana University. And in the capacity of Data Consultant at Harlem Bee, I am working on Analytics and Visualization for Business Development and Seed Funding Improvement.
 
+Currently Seeking Full-time Opportunities in Data Science/Analytics, Data Engineering, BA and Consulting.
 
 ### Education
 
