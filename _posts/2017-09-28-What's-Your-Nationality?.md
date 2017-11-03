@@ -4,12 +4,9 @@ title: "What's your nationality?"
 tags: [EDA,R,Correlation,Indentity]
 ---
 
-This report provides primary analysis of data at following site:
+This report provides primary analysis of  this **[data](http://assets.pewresearch.org/wp-content/uploads/sites/2/2017/02/01092953/Pew-Research-Center-National-Identity-Report-TOPLINE-FOR-RELEASE-February-1-2017.pdf)**
 
-http://assets.pewresearch.org/wp-content/uploads/sites/2/2017/02/01092953/Pew-Research-Center-National-Identity-Report-TOPLINE-FOR-RELEASE-February-1-2017.pdf
-
-
-### Load Required Libraries
+**Load Required Libraries**
 
 ```
 library(ggplot2)
@@ -17,7 +14,8 @@ library(grid)
 library(GGally)
 ```
 
-### Reading Data into R
+
+**Reading Data into R**
 ```
 birthplace<-read.csv('birthplace.csv',header = FALSE,fileEncoding = 'UTF-8-BOM')
 language<-read.csv('language.csv',header = FALSE,fileEncoding = 'UTF-8-BOM')
@@ -25,7 +23,7 @@ religion<-read.csv('religion.csv',header = FALSE,fileEncoding = 'UTF-8-BOM')
 customs<-read.csv('customs.csv',header = FALSE,fileEncoding = 'UTF-8-BOM')
 ```
 
-### Standardizing scores for all four Questions
+**Standardizing scores for all four Questions**
 ```{r}
 birthplace["score"]<-(4*birthplace[2]+3*birthplace[3]+2*birthplace[4]
                       +birthplace[5])/(birthplace[2]+birthplace[3]+birthplace[4]+birthplace[5])
@@ -36,11 +34,12 @@ religion["score"]<-(4*religion[2]+3*religion[3]+2*religion[4]
 customs["score"]<-(4*customs[2]+3*customs[3]+2*customs[4]
                    +customs[5])/(customs[2]+customs[3]+customs[4]+customs[5])
 ```
-### Replace NAN value for Japan
+
+**Replace NAN value for Japan**
 ```
 religion<- replace(religion,is.na(religion),0)
 ```
-### Calculate Z score (Standardization)
+##### Calculate Z score (Standardization)
 ```
 birthplace$score<-(birthplace$score-mean(birthplace$score))/sd(birthplace$score)
 language$score<-(language$score-mean(language$score))/sd(language$score)
@@ -50,7 +49,7 @@ religion[14,8]<-0
 countries<-birthplace[1]
 ```
 
-### Data_Frame
+##### Data_Frame
 ```
 data<-cbind(countries,birthplace$score,language$score,religion$score,customs$score)
 colnames(data)<-c("country","birth_score","lang_score","rel_score","cust_score")
@@ -100,7 +99,7 @@ lang.cat<-cut_number(data$lang_score,n=2,labels=c("BM","AM"))
 ggpairs(data.frame(data[, 2:5], lang.cat), aes(color = lang.cat),title = "Scatterplot Matrix")
 ```
 
-[![scatter_plot_matrix]({{ site.url }}/img/blog/scatter_plot_matrix.jpg)]({{ site.url }}/img/blog/scatter_plot_matrix.jpg)
+[![scatterplot_matrix]({{ site.url }}/img/blog/scatterplot_matrix.jpg)]({{ site.url }}/img/blog/scatterplot_matrix.jpg)
 
 
 We see that, there is no clear pattern(relation) between any other variables for higher(above mean) and lower values(below mean) of lang_score. 
