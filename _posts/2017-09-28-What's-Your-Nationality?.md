@@ -4,19 +4,19 @@ title: "What's your nationality?"
 tags: [EDA,R,Correlation,Indentity]
 ---
 
-This report provides primary analysis of  this **[data](http://assets.pewresearch.org/wp-content/uploads/sites/2/2017/02/01092953/Pew-Research-Center-National-Identity-Report-TOPLINE-FOR-RELEASE-February-1-2017.pdf)**
+This report provides primary analysis of **[Pew-Research-Center-National-Identity-Report-Data](http://assets.pewresearch.org/wp-content/uploads/sites/2/2017/02/01092953/Pew-Research-Center-National-Identity-Report-TOPLINE-FOR-RELEASE-February-1-2017.pdf)**
 
 **Load Required Libraries**
 
-```
+
+```{r}
 library(ggplot2)
 library(grid)
 library(GGally)
 ```
 
-
 **Reading Data into R**
-```
+```{r}
 birthplace<-read.csv('birthplace.csv',header = FALSE,fileEncoding = 'UTF-8-BOM')
 language<-read.csv('language.csv',header = FALSE,fileEncoding = 'UTF-8-BOM')
 religion<-read.csv('religion.csv',header = FALSE,fileEncoding = 'UTF-8-BOM')
@@ -36,11 +36,11 @@ customs["score"]<-(4*customs[2]+3*customs[3]+2*customs[4]
 ```
 
 **Replace NAN value for Japan**
-```
+```{r}
 religion<- replace(religion,is.na(religion),0)
 ```
-##### Calculate Z score (Standardization)
-```
+**Calculate Z score (Standardization)**
+```{r}
 birthplace$score<-(birthplace$score-mean(birthplace$score))/sd(birthplace$score)
 language$score<-(language$score-mean(language$score))/sd(language$score)
 religion$score<-(religion$score-mean(religion[1:13,"score"]))/sd(religion[1:13,"score"])
@@ -48,9 +48,8 @@ customs$score<-(customs$score-mean(customs$score))/sd(customs$score)
 religion[14,8]<-0
 countries<-birthplace[1]
 ```
-
-##### Data_Frame
-```
+**Data_Frame**
+```{r}
 data<-cbind(countries,birthplace$score,language$score,religion$score,customs$score)
 colnames(data)<-c("country","birth_score","lang_score","rel_score","cust_score")
 ```
