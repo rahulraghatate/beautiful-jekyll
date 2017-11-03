@@ -1,8 +1,17 @@
 ---
 layout: post
-title: First post!
+title: SAS Data Analysis
 image: /img/hello_world.jpeg
-tags: [random, exciting-stuff]
+tags: [SAS,GLM,Data-Modeling,Data Analysis]
 ---
 
-This is my first post, how exciting!
+# Work In Progress
+
+# Add the Individual stories for following concepts
+
++ Autocorrelation
++ Heteroskedasticity
++ Multicollinearity
++ Robust Models
++ Fixed Effect Models
++ Examples
