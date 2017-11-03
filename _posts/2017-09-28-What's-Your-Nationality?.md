@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "What's your national identity?"
+title: "What's your nationality?"
 tags: [EDA,R,Correlation,Indentity]
 ---
 
