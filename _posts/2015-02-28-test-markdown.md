@@ -1,8 +1,8 @@
 ---
 layout: post
-title: Test markdown
+title: Exploratory Data Analysis
 subtitle: Each post also has a subtitle
-gh-repo: daattali/beautiful-jekyll
+gh-repo: rahulraghatate/Manhattan-Crime-Analysis
 gh-badge: [star, fork, follow]
 ---
 
