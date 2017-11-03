@@ -1,0 +1,189 @@
+---
+title: "STAT-S675 Assignment 8"
+author: "Rahul Raghatate"
+date: "October 19, 2017"
+output: pdf_document
+documentclass: article
+classoption: a4paper
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,message=FALSE, comment=NA, warning=FALSE)
+source("manifold.r")
+source("stress.r")
+source("out.r")
+```
+
+
+# Question 1
+TO determine $b^2$ and $a$ for $\Delta=\Delta(X)=\Delta(Y)$ 
+```{r echo = FALSE}
+cat("Consider 200 Equidistant points \n")
+```
+```{r}
+n = 200
+```
+```{r echo=FALSE}
+cat("Creating distance matrix D such that d_ij will be shortest path distance for pair i~j \n")
+```
+```{r}
+D = matrix(0,n,n)
+
+for(i in 1:n) {
+  for(j in 1:n) {
+    p = min(abs(i-j), abs(abs(i-j) - n))
+    D[i, j] = p*0.01
+  }
+}
+
+B=mds.tau(D^2)
+```
+$B=\tau(\Delta_2)$ is the matrix of (fallible) inner products therefore with constant diagonal entries ($b^2$) suggesting all points to be on sphere.
+```{r echo=FALSE}
+cat("\n b^2=",B[1,1])
+cat("\n a=",acos(B[1,2]/B[1,1]))
+```
+where ,
+a = angle between the pair of consecutive points
+b = radius of sphere of those points
+
+
+# Question 2
+```{r}
+filename <- "~/manifold.y.txt"
+X <- matrix(scan(filename),byrow=TRUE,ncol=3)
+```
+# part (1)
+## Uisng PCA,
+```{r}
+X.pca<-prcomp(X,center=TRUE,scale=FALSE)
+X.pca$sdev
+X.pca_2d<-cbind(X.pca$x[,1],X.pca$x[,2])
+plot(X.pca_2d,col = 'blue',type = 'p',pch = 16,
+     main =paste("2-dimensional representation of Data using PCA"))
+```
+```{r echo=FALSE}
+cat("\n Variation Explained by first 2 components using PCA method:\n",
+    sum((X.pca$sdev**2)[1:2])/sum(X.pca$sdev**2))
+X.pca.rank<-rank(X.pca$x[,1])
+cat("\n rank 28 points of first horizontal axis from lowest to highest \n",
+    X.pca.rank)
+```
+## Using CMDS,
+```{r}
+X.Delta<-mds.edm1(X)
+X.Delta.cmds<-cmdscale(X.Delta,k=2,eig = TRUE)
+plot(X.Delta.cmds$points,col = 'blue',type = 'p',pch = 16,
+     main=paste("2-dimensional representation of Data using CMDS"))
+```
+```{r echo=FALSE}
+cat("\n Variation Explained by first 2 components using CMDS method: \n",
+    (X.Delta.cmds$eig[1]+X.Delta.cmds$eig[2])/sum(X.Delta.cmds$eig)*100)
+X.cmds.rank<-rank(X.Delta.cmds$points[,1])
+cat("\n rank 28 points of first horizontal axis from lowest to highest \n",
+    X.cmds.rank)
+```
+# part (2) 
+Isomap with k=4 nearest neighbors to construct a 2-dimensional representation of X
+```{r}
+knn<-graph.knn(X.Delta,4)
+W<-graph.dis(knn,X.Delta)
+S<-graph.short(W)
+Imap.cmds<-cmdscale(S,eig = TRUE)
+plot(Imap.cmds$points,col = 'blue',type = 'p',pch = 16,
+     main=paste("2-dimensional representation of X using Isomap(k=4)"))
+```
+```{r echo=FALSE}
+cat("Variation Explained by first 2 components using Isomap(k=4): \n",
+    (Imap.cmds$eig[1]+Imap.cmds$eig[2])/sum(Imap.cmds$eig)*100)
+X.Imap.knn.rank<-rank(Imap.cmds$points[,1])
+cat("\n ranking 28 points of first horizontal axis from lowest to highest \n",
+    rank(Imap.cmds$points[,1]))
+```
+# part (3) 
+Isomap with unit edge weights
+```{r}
+knn<-graph.knn(X.Delta,4)
+W_unit<-graph.unit(knn)
+S_unit<-graph.short(W_unit)
+Imap_unit.cmds<-cmdscale(S_unit,eig = TRUE)
+plot(Imap_unit.cmds$points,col = 'blue',type = 'p',pch = 16,
+     main=paste("2-dimensional representation of X using Isomap(k=4) with unit weights"))
+```
+```{r echo=FALSE}
+cat("\n Variation Explained by first 2 components using Isomap(k=4) method with unit weights:\n",
+    (Imap_unit.cmds$eig[1]+Imap_unit.cmds$eig[2])/sum(Imap_unit.cmds$eig)*100)
+X.Imap.knn.unit.rank<-rank(Imap_unit.cmds$points[,1])
+cat("\n ranking 28 points of first horizontal axis from lowest to highest \n",
+    rank(Imap_unit.cmds$points[,1]))
+```
+# part (4)
+Reciprocal Laplacian eigenmap
+```{r}
+R.Delta<-mds.edm1(X)
+knn<-graph.knn(R.Delta,4)
+Adj<-graph.adj(knn)
+G<-graph.laplacian(Adj)
+laplacian.eig = eigen(G)
+val = laplacian.eig$values
+val.vec = as.vector(sqrt(val))
+laplacian.eig.vec = laplacian.eig$vectors[, 1:2]
+R.X.lp = sweep(laplacian.eig.vec, MARGIN = 2, val.vec[1:2], "/")
+plot(R.X.lp,col = 'blue',type = 'p',pch = 16,
+     main = paste("Reciprocal Laplacian Eigenmap")) 
+X.recip.lp.eig.map.diss.rank<-rank(laplacian.eig$vectors[,1])
+```
+```{r echo=FALSE}
+cat("\n Variation Explained by first 2 components using Isomap(k=4) method with unit weights:\n",
+    sum(laplacian.eig$values[1:2])/sum(laplacian.eig$values))
+cat("\n ranking 28 points of first horizontal axis from lowest to highest \n",
+    rank(laplacian.eig$vectors[,1]))
+```
+# part (5)
+```{r}
+Gamma<-graph.heat(X.Delta,1)
+Gamma.lp<-graph.laplacian(Gamma)
+laplacian.eig = eigen(Gamma.lp)
+val = laplacian.eig$values
+val.vec = as.vector(sqrt(val))
+laplacian.eig.vec = laplacian.eig$vectors[, 1:2]
+R.X.lp = sweep(laplacian.eig.vec, MARGIN = 2, val.vec[1:2], "/")
+plot(R.X.lp,col = 'blue',type = 'p',pch = 16,
+     main = paste("Reciprocal Laplacian Eigenmap using heat kernel for Simmilarity Matrix"))
+X.recip.lp.eig.map.simm.rank<-rank(laplacian.eig$vectors[,1])
+```
+```{r echo=FALSE}
+cat("\n Variation Explained by first 2 components using Isomap(k=4) method with unit weights:\n",
+    sum(laplacian.eig$values[1:2])/sum(laplacian.eig$values))
+cat("\n ranking 28 points of first horizontal axis from lowest to highest:\n",
+    rank(laplacian.eig$vectors[,1]))
+```
+
+# part(6)
+```{r fig.align='center',fig.width=10,fig.height=6, tidy=TRUE}
+library(plot3D)
+scatter3D(X[,1],X[,2],X[,3],type="l",main="Original Data")
+text3D(X[,1],X[,2],X[,3],  labels = seq(1,28,1),
+        add = TRUE, colkey = FALSE, cex = 1)
+par(mfrow=c(2,2))
+plot(X.pca.rank, main="PCA",type = "l")
+text(X.pca.rank, as.character(rep(1:28)),
+     add = TRUE, colkey = FALSE, cex = 1)
+plot(X.cmds.rank, main="CMDS",type = "l")
+text(X.cmds.rank, as.character(rep(1:28)),
+     add = TRUE, colkey = FALSE, cex = 1)
+plot(X.Imap.knn.rank, main="Isomap with knn=4",type = "l")
+text(X.Imap.knn.rank, as.character(rep(1:28)),
+     add = TRUE, colkey = FALSE, cex = 1)
+plot(X.Imap.knn.unit.rank,type = "l", main="Isomap with knn=4 and unit wieghts")
+text(X.Imap.knn.unit.rank, as.character(rep(1:28)),
+     add = TRUE, colkey = FALSE, cex = 1)
+plot(X.recip.lp.eig.map.diss.rank,type = "l", main="Reciprocal Eigenmap from dissimilarites")
+text(X.recip.lp.eig.map.diss.rank, as.character(rep(1:28)),
+     add = TRUE, colkey = FALSE, cex = 1)
+plot(X.recip.lp.eig.map.simm.rank,type = "l", main="Reciprocal Eigenmap from simmilarities")
+text(X.recip.lp.eig.map.simm.rank, as.character(rep(1:28)),
+     add = TRUE, colkey = FALSE, cex = 1)
+```
+
+Based on above graphs and variation explained by first two components for each technique, we might conclude that manifold method of Isomap with KNN gives best configuration in 2D or 1D. Therefore, the 3D data maynot be lying in perfect affine linear subspace and hence the non-linear dimensionality reduction technique of manifold learning(Isomap) gives best result. The variation explained by Isomap method is approx. 99.7% which is highest compared to PCA, CMDS, Reciprocal Laplacian Eigenmaps(dissimilarity and Simmilarity based) methods. Also based on ranking of Isomap(part 4),  we might say that the configuration is retained maximally from original space compared to others.

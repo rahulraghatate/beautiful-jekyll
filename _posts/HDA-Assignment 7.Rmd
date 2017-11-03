@@ -1,0 +1,160 @@
+---
+title: "STAT-S675 HDA_Assignment 7"
+author: "Rahul Raghatate"
+date: "October 11, 2017"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,warning=FALSE,fig.width=10, fig.height=8)
+```
+
+```{r include=FALSE, cache=FALSE}
+source("stress.R")
+source("manifold.R")
+```
+# Q1
+
+GIVEN:\
+$y_i = (\cos \theta_i,\sin \theta_i) \in R^2$ where,\
+$\theta = (i-1) \pi/3$ for i = 1, . . . , 6.
+```{r fig_width=6,fig_height=3}
+y = matrix(0, 6, 2)
+for(i in 1:6) {
+  theta = (i-1) * (pi/3)
+  y[i, 1] = cos(theta)
+  y[i, 2] = sin(theta)
+}
+print(y)
+plot(y,main="Plot for yi in R^2:")
+```
+
+
+Also given,\
+$a = \sqrt(2 - 2*\cos(\pi/3))$ \
+$b = \sqrt(2 + 2*\cos(\pi/3))$
+```{r fig_width=6,fig_height=4}
+a = sqrt(2 - 2*cos(pi/3))
+b = sqrt(2 + 2*cos(pi/3))
+
+#Given dissimilarity matrix after computing shortest path dist 
+#between vertices of undirected graph
+
+Delta = matrix(c(0, a, b, 2, a+2, b+2,
+             a, 0, a, b, 2, a+2,
+             b, a, 0, a, b, 2,
+             2, b, a, 0, a, b,
+             a+2, 2, b, a, 0, a,
+             b+2, a+2, 2, b, a, 0), nrow = 6)
+```
+Constructing an initial configuration by CMDS,
+```{r}
+X.cmds = cmdscale(Delta)
+
+cat("the raw stress of X.cmds:",
+    mds.stress.raw.eq(X.cmds,Delta))
+```
+Performing 20 Successive guttman iterations,
+```{r}
+X.cmds.transf<-X.cmds
+for (i in 1:20){
+ X.cmds.transf<-mds.guttman.eq(X.cmds.transf,Delta)
+ if (i%%5==0){
+ cat("raw stress of the new configuration after k=",i,"=",
+     mds.stress.raw.eq(X.cmds.transf,Delta),"\n")
+ }
+}
+cat("Configuration after obtaining initial CMDS configuration and 20 successive Guttman iterations")
+plot(X.cmds.transf,main = "Final Configuration")                        
+```
+
+# Q2
+
+Loading the data,
+```{r}
+X.spiral = read.csv("http://mypage.iu.edu/~mtrosset/Courses/675/X.spiral", 
+                    sep = "", header=  FALSE)
+plot(X.spiral,main="Orignal Spiral plot")
+
+cat('EDM-1 for X.spiral')
+X.spiral.edm1 = mds.edm1(X.spiral)
+h_values=c(1e-3,1e-2,0.05,1e-1,0.5,1,1.5,3.5,5,10,20,25,50)
+par(mfrow=c(2,2))
+for (h in h_values){
+    X.spiral.w = graph.heat(X.spiral.edm1,h)
+    G = graph.laplacian(X.spiral.w)
+    laplacian.eig = eigen(G)
+    val = laplacian.eig$values
+    val.vec = as.vector(sqrt(val))
+    laplacian.eig.vec = laplacian.eig$vectors[, 199:200]
+    X.spiral.lp = sweep(laplacian.eig.vec, MARGIN = 2, val.vec[199:200], "/")
+    plot(X.spiral.lp,main = paste("Laplacian Eigenmap for h=",h))
+}
+```
+Observations:
+* For small values of h in range of (0.001 to 0.1),the configurations looks clustered and the data is not similar to original configuration. The similarities for h<0.1 still seems to be different hence no overlapping.
+* As the value of h increases for (h=0.1) the data configurations seems to be a good approximation.
+* But,as h increases further till 50,the points seems to overlap, and configuration shows distortion.The points with similarities farther have come closer and hence overlaping can been seen. 
+
+# Q3
+```{r}
+
+mds.tau <- function(H)
+{
+#
+#  This function returns the double centering of the inputted matrix.
+#  See Critchley for details.
+#
+        n <- nrow(H)
+        P <- diag(n) - 1/n
+        return(-0.5 * P %*% H %*% P)
+}
+mds.kappa <- function(C) {
+#
+#  Critchley's kappa operator on centered nxn matrices.
+#  This is the inverse of tau.
+#
+        n <- nrow(C)
+        H <- matrix(1,nrow=n,ncol=n)
+        d <- diag(C)
+        H <- diag(d) %*% H
+        H <- H + t(H) - 2 * C
+        d <- seq(1, n^2, n + 1)
+        H[d] <- 0
+        return(H)
+}
+
+X.spiral = read.csv("http://mypage.iu.edu/~mtrosset/Courses/675/X.spiral", sep = "", header=  FALSE)
+#Delta.sp<-matrix(c(0,1.6,1.6,1.6,3,0,3,3,3,3,0,3,1.6,1.6,1.6,0),nrow=4)
+#X.spiral<-X.spiral[1:4,]
+n = nrow(X.spiral)
+Delta.sp = mds.edm1(X.spiral)
+h = 0.1
+W = exp(-h*(Delta.sp^2))
+e = matrix(1, nrow = n)
+t = W %*% e
+T = diag(as.vector(t))
+T_inv = solve(T)
+L = T - W
+P = T_inv %*% W
+w_bar = as.numeric(t(e) %*% W %*% e)
+PI = t/w_bar
+D = w_bar*T_inv
+Z = solve(T_inv%*%L + e%*%t(PI))
+Z_D = Z %*% D
+# Z_D = solve((L/w_bar) + PI %*% t(PI))
+C = mds.kappa(Z_D)
+B = mds.tau(C)
+B.eig = eigen(B)
+B.eig$values
+```
+From Section  6.4.1-6.4.2 we know that  calculated C in above code is EDM-2. 
+
+To prove $\Delta = [\delta_{ij}]$ as EDM-1:  
+
+* compute $A = \Delta_2 = [\delta^2_{ij}]$  
+* compute $B = \tau(A) = -(1/2) PAP$  
+* compute the spectral decomposition of $B$  
+* if there are any negative eigen values, then $\Delta$ is not EDM-1, otherwise it is EDM-1.
+
+I couldn't find any specific configuration satisfying above conditions. I tested for Q2 data.

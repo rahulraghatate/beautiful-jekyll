@@ -1,0 +1,153 @@
+---
+title: "Assignment 9 - STAT-S675"
+author: "Rahul Raghatate [rraghata@iu.edu]"
+date: "October 26, 2017"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,message=FALSE, comment=NA, warning=FALSE)
+source("manifold.r")
+source("stress.r")
+source("out.r")
+```
+
+## Question 1
+Lets have a configuration for 3 clusters as
+```{r}
+library(ggplot2)
+A = data.frame(matrix( 
+  c(1,1,2,2,3,3,6,6,7,7,8,8,10,10,11,11,12,12,13,13),
+  ncol=2,             
+  byrow = TRUE))
+
+cluster <- c(rep("cluster1",3),rep("cluster2",3),rep("cluster3",4))
+df <- cbind(A,cluster)
+ggplot(data=df,aes(x=X1, y = X2 ,colour = cluster, group= cluster),pch=19)+geom_point()
+
+```
+
+I have created 3 clusters as shown in the scatterplot[orange=i,green=j,blue=k].\
+Based on $ES_{ij} = \min \{||x_r-x_s|| : x_r \in C_i, x_s \in C_j\}$ measure of cluster dissimilarity,
+```{r}
+ES_ij<-sqrt(sum((A[3,] - A[4,]) ^ 2))
+ES_ik<-sqrt(sum((A[3,] - A[7,]) ^ 2))
+ES_jk<-sqrt(sum((A[6,] - A[7,]) ^ 2))
+```
+
+```{r echo=FALSE}
+cat("ES_ij + ES_jk =",ES_ij+ES_jk)
+cat("\nES_ik=",ES_ik)
+```
+Therefore,
+$ES_{ik}>ES_{ij}+ES_{jk}$, which violates the triange inequality.
+
+## Question 2
+```{r fig.height=6,fig.width=11}
+filename <- "~/data.txt"
+Delta <- matrix(scan(filename),byrow=TRUE,ncol=15)
+#The ij dissimilarity is the number of times that representatives i and j
+#voted differently on 15 environmental bills.
+Delta.class<- c('red','red','blue','blue','red',
+                'red','red','blue','blue','blue',
+                'blue','red','red','blue','blue')
+Delta.dist<-dist(Delta)
+#Hierarchical Clustering
+#1-> Single Linkage
+hclust_sing<-hclust(Delta.dist, method = 'single')
+#2-> Complete Linkage
+hclust_comp<-hclust(Delta.dist, method = 'complete')
+#3-> Average Linkage
+hclust_averg<-hclust(Delta.dist, method = 'average')
+
+# Plotting Dendograms
+
+# Single Linkage
+plot(as.dendrogram(hclust_sing), main="Single Linkage")
+#Complete Linkage
+plot(as.dendrogram(hclust_comp), main="Complete Linkage")
+#Average Linkage
+plot(as.dendrogram(hclust_averg), main="Average Linkage")
+```
+### With Labels
+```{r fig.height=6,fig.width=11}
+par(mfrow=c(1,3))
+# Single Linkage
+plot((hclust_sing),labels=Delta.class, main="Single Linkage")
+#Complete Linkage
+plot((hclust_comp),labels=Delta.class, main="Complete Linkage")
+#Average Linkage
+plot((hclust_averg),labels=Delta.class, main="Average Linkage")
+```
+Comparing with 2D CMDS configuration,
+```{r fig.height=5, fig.width=8}
+Delta.cmds <- cmdscale(Delta,k=3,eig=TRUE)
+X <- Delta.cmds$points
+plot(X[,1],X[,2],main="2D CMDS configuration",cex = 1e-10)
+text(X[,1],X[,2],as.character(rep(1:15)),
+     add = TRUE, col=Delta.class,colkey = FALSE,cex=1)
+```
+Based on above CMDS configuration and dendrograms for single,complete and average linkage, We can see the Complete Linkage and the average linkage performs better and gives required 2 distinct clusters whereas Single Linkage dendrogram shows contradictory results. The complete and average linkage seems to give similar results and are visually difficult to distinguish in performance.
+
+## Question 3
+Given configuration,
+```{r}
+D<-c(seq(0,1,0.1),2)
+D.idx<-seq(1,12,1)
+```
+Verifying the values computed in Example 8.1,
+
+Defining W_cal function for calculating internal cohesion for clusters, 
+```{r}
+W_cal=function(c1,c2){
+D1<-dist(D[c1])
+D2<-dist(D[c2])
+Dist<-c(D1,D2)
+
+W=0
+
+  for(c_num in 1:2){
+    for(r in 1:length(Dist)){
+    W = W + Dist[r]
+    }
+  }
+
+  return(W)
+}
+```
+Calculating W for both given configuration,
+```{r}
+cat("For C1={1:11} and C2={12} configuration, W=",W_cal(c(1:11),c(12)))
+cat("For C1={2:11} and C2={1,12} configuration, W=",W_cal(c(2:11),c(1,12)))
+```
+Therefore, the given values in notes for the example are correct.
+
+
+## Part b
+Finding optimal clusters such that it minimizes equation 8.1,
+```{r}
+W_min=function(){
+  W_min = 1000
+  for (i in 1:12){
+    combn_set<-combn(D.idx,i)
+    for(j in 1:ncol(combn_set)){
+      cluster1<-combn_set[,j];
+      cluster2<-setdiff(D.idx,cluster1);
+      W = W_cal(cluster1,cluster2);
+      if(W < W_min){
+        W_min<- W
+        C1_opt<-D[cluster1]
+        C2_opt<-D[cluster2]
+      }
+      }
+  }
+  return(list(W_min,C1_opt,C2_opt))
+}
+A=W_min();
+```
+The optimal clustering which minimizes the W equation is for the following two clusters,
+```{r}
+print(paste("Cluster1=",A[2]))
+print(paste("Cluster2=",A[3]))
+print(paste("Minimum Value Obtained of W for this configuration W_min=",A[1])) 
+```
