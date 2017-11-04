@@ -1,23 +1,30 @@
-
 ---
 layout: post
-title: "Property-Evaluation-now-at-Finger-Tips"
-subtitle: "Predictive Analytics using advanced ML techniques"
-tags: [Python,Feature_Selection,Ridge,Lasso, XgBoost, Sklearm, GBM, Elastic Net, Stacking, K-fold cross validation]
-gh-repo: rahulraghatate/Housing-Sale-Price-Prediction
+title: Property-Evaluation-now-at-Finger-Tips
+subtitle: Predictive Analytics using advanced ML techniques
+tags: [Python,Feature_Selection,Ridge,Lasso,XgBoost,Sklearm,GBM,Elastic_Net,Stacking,K-fold_crossv_validation]
+gh-repo: rahulraghatate/Housing-Sale-Price-Prediction/
 gh-badge: [star, fork, follow]
 ---
 
+
+
 "Buying a house is a stressful thing."
+
+
 
 Contrary to the widespread belief that house prices are dependent on the generic factors like number of bedrooms and square area of house, Ames Housing dataset proves that many other factors influence the final price of homes. This dataset contains 79 explanatory variables to describe almost every aspect of the house. Generally house buyers neglect this information. As a result their price estimation is very different from the actual prices. 
 
+
+
 Below is my first Data Science Project as part of Data Mining Course, a model to predict the prices of residential homes in Ames, Iowa, using advanced regression techniques. This will provide buyers will a rough estimate of what the houses are actually worth. This in turn will help them have better negotiation deals with sellers.
+
 
 
 Most of the houses are bought through real estate agents. People rarely buy directly from the seller, since there are a
 lot of legal terminology involved and people are unaware of them. Hence real estate agents are trusted with the communication between buyers and sellers as well as laying down a legal contract for the transfer. This just creates a middle man and increases the cost of houses. Therefore the houses are overpriced and a buyer should have a better idea of the actual value of these houses.[2]
 There are various tools, like Zillow and Trulia, available online to assist a person with buying houses. These tools provide a price estimation of various houses and are generally free for use. These tools incorporate many factors to estimate the house prices by providing weights to each factor. For example, Zillow creates Zestimate of houses which is “calculated three times a week based on millions of public and user-submitted data points” [3]. The median error rate for these estimates are quite low. The main problem with these tools is that they are heavy on advertisements and they promote real estate agents. Zillow provides paid premium services for real estate agents and this is their main source of income.[4] 
+
 
 
 Estimates of actual house prices will help buyers to have better negotiations with the real estate agents, as the list price of the house and much higher than the actual price. Our prediction model will provide the buyers with these estimates. 
@@ -787,8 +794,6 @@ import xgboost as xgb
 import lightgbm as lgb
 ```
 
-    C:\Users\rvrag\Anaconda3\lib\site-packages\sklearn\cross_validation.py:44: DeprecationWarning: This module was deprecated in version 0.18 in favor of the model_selection module into which all the refactored classes and functions are moved. Also note that the interface of the new CV iterators are different from that of this module. This module will be removed in 0.20.
-      "This module will be removed in 0.20.", DeprecationWarning)
     
 
 For Cross-validation purpose we can use cross_val_score function of Sklearn. However this function has not a shuffle attribut, we add then one line of code on Alexandru function, in order to shuffle the dataset prior to cross-validation
