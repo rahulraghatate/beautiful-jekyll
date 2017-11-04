@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: post
 title: "Anomalous Behavior of Barley Yield"
 tags: [R,Time-Series,Anomaly-Detection, ggplot2]
 gh-repo: rahulraghatate/Exploratory-Data-Analysis
