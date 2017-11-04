@@ -3,9 +3,9 @@ layout: post
 title: Property-Evaluation-now-at-Finger-Tips
 subtitle: Predictive Analytics using advanced ML techniques
 tags: [Python,Feature_Selection,Ridge,Lasso,XgBoost,Sklearm,GBM,Elastic_Net,Stacking,K-fold_crossv_validation]
-gh-repo: rahulraghatate/Housing-Sale-Price-Prediction/
+gh-repo: rahulraghatate/Housing-Sale-Price-Prediction
 gh-badge: [star, fork, follow]
-permalink: /python/property-evaluation
+permalink: /python/property-evaluation/
 comments: true
 show-share: true
 ---
