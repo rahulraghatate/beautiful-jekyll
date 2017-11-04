@@ -4,6 +4,10 @@ title: "What's your Nationality?"
 tags: [EDA,R,Correlation,Indentity]
 gh-repo: rahulraghatate/Exploratory-Data-Analysis/Analysis of National Identity/
 gh-badge: [star, fork, follow]
+permalink: /r/nationality_components_analysis/
+layout: post
+comments: true
+show-share: true
 ---
 
 This report provides primary analysis of **[Pew-Research-Center-National-Identity-Report-Data](http://assets.pewresearch.org/wp-content/uploads/sites/2/2017/02/01092953/Pew-Research-Center-National-Identity-Report-TOPLINE-FOR-RELEASE-February-1-2017.pdf)**
