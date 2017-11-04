@@ -6,9 +6,8 @@ gh-repo: rahulraghatate/Exploratory-Data-Analysis/EDA-Barley_Yield_Anamoly_Detec
 gh-badge: [star, fork, follow]
 ---
 
-```{r,echo = FALSE,message=FALSE,warning=FALSE,error=FALSE,tidy=TRUE,fig.align='center',fig.width=10,fig.height=6}
-```
 **Libraries Required**
+
 ```{r}
 library(ggplot2)
 library(MASS)
@@ -22,7 +21,7 @@ library(gridExtra)
 **Data Import**
 
 Lets import the data and have a look at summary of it.
-```{r,echo = FALSE,message=FALSE,warning=FALSE,error=FALSE,tidy=TRUE,fig.align='center',fig.width=10,fig.height=6}
+```{r}
 data=agridat::minnesota.barley.yield
 summary(data)
 ```
@@ -31,7 +30,8 @@ summary(data)
 
 
 **Plots for barley yields varied by gen(variety) and year at each site**
-```{r,echo = FALSE,message=FALSE,warning=FALSE,error=FALSE,tidy=TRUE,fig.align='center',fig.width=10,fig.height=6}
+
+```{r}
 ggplot(data=data, aes(x=year, y = yield ,colour = gen, group= gen)) +geom_line()+ geom_point() + facet_wrap(~site)+ ggtitle("Barley yield vs year ~ Site for all varieties")
 ```
 
@@ -41,8 +41,9 @@ ggplot(data=data, aes(x=year, y = yield ,colour = gen, group= gen)) +geom_line()
 There is no pattern in above plot. Sites StPaul, Duluth and  are showing some extreme skewness.There has been a decrease of yield during 1935-36. The pattern remains irregular.
 
 **Pattern Exploration for yield at diff sites and time**
+
 Consider the mean yields (average over all the varieties) in each year at each site.
-```{r,echo = FALSE,message=FALSE,warning=FALSE,error=FALSE,tidy=TRUE,fig.align='center',fig.width=10,fig.height=6}
+```{r}
 data.avg=aggregate(yield~year+site,mean,data=data)
 #Facet plot for mean yeild at each site against year-timeline
 p1<-ggplot(data=data.avg, aes(x=year, y = yield ,colour = site, group =site)) + 
@@ -61,7 +62,7 @@ Looking at the graph, it is difficult to comment on the pattern of barley yield 
 **Interaction among the variables**
 
 let's plot the graph of their interactions and check which is relatively highly scattered i.e. if the year and variety variation here is small (i.e. in each  panel dots are scattered close to vertical line), then perhaps we can do without such interactions.
-```{r,echo = FALSE,message=FALSE,warning=FALSE,error=FALSE,tidy=TRUE,fig.align='center',fig.width=10,fig.height=6}
+```{r}
 
 year.gen <- aggregate(yield ~ year + gen, mean, data = data )
 year.site <- aggregate(yield ~ year + site, mean, data = data )
@@ -89,14 +90,14 @@ As the data consist of outliers and considering interaction also, least squares 
 
 **Model Implementation**
 Applying RLM Model,with the goal of determining whether Morris 1931-1932 is an anomaly.
-```{r,echo = FALSE,message=FALSE,warning=FALSE,error=FALSE,tidy=TRUE,fig.align='center',fig.width=10,fig.height=6}
+```{r}
 barley.rlm = rlm(yield ~ year * site + gen, psi = psi.bisquare, data = data)
 barley.rlm.df = augment(barley.rlm)
 barley.3132 <- barley.rlm.df[barley.rlm.df$year == 1931 | barley.rlm.df$year == 1932,]
 barley.3132$year = factor(barley.3132$year)
 ```
 **Plot to show the site effects**
-```{r,echo = FALSE,message=FALSE,warning=FALSE,error=FALSE,tidy=TRUE,fig.align='center',fig.width=10,fig.height=6}
+```{r}
 site.effects = sort(dummy.coef(barley.rlm)$site)
 sites = factor(names(site.effects), levels = names(site.effects))
 site.df = data.frame(effect = site.effects, site = sites)
@@ -109,7 +110,7 @@ ggplot(site.df, aes(x = effect, y = site, color = site)) + geom_point()
 As we can see StPaul has the highest site effect where Crookston has the lowest effect. The other four approximately equally spaced from each other.
 
 **Plot to show the variety (gen) effects.**
-```{r,echo = FALSE,message=FALSE,warning=FALSE,error=FALSE,tidy=TRUE,fig.align='center',fig.width=10,fig.height=6}
+```{r}
 gen.effects = sort(dummy.coef(barley.rlm)$gen)
 gens = factor(names(gen.effects), levels = names(gen.effects))
 gens.df = data.frame(effect = gen.effects , gen = gens)
@@ -121,7 +122,7 @@ ggplot(gens.df, aes(x = effect, y = gen, color = gen)) + geom_point()
 
 
 **Residual and Fitted Values plot for anomaly detection**
-```{r,echo = FALSE,message=FALSE,warning=FALSE,error=FALSE,tidy=TRUE,fig.align='center',fig.width=10,fig.height=6}
+```{r}
 ggplot(barley.3132, aes(y=gen,x=.fitted,color=year)) + geom_point() + facet_wrap(~ site)+ ggtitle("Fitted Plot for year 1931-32 of the Barley yield wrt Site ")
 ggplot(barley.3132, aes(y=gen,x=.resid,color=year)) + geom_point() + facet_wrap(~ site)+ ggtitle("Residual Plot for year 1931-32 of the Barley yield wrt Site ")
 ```
@@ -130,7 +131,7 @@ ggplot(barley.3132, aes(y=gen,x=.resid,color=year)) + geom_point() + facet_wrap(
 
 
 After proceeding with the RLM to model the data, it is evident from the residual plot that Morris during the year 1931-32 appears as an anomaly. The plot indicates a general trend in the residuals across all sites that 1931 appears to be on the positive end and 1932 appears to be on the negative end. But, Morris seems to defy the trend. Thus exhibiting an anomaly.
-```{r,echo = FALSE,message=FALSE,warning=FALSE,error=FALSE,tidy=TRUE,fig.align='center',fig.width=10,fig.height=6}
+```{r}
 barley.rlm = rlm(yield ~ gen + year + site, psi = psi.bisquare, data = data)
 barley.rlm.df = augment(barley.rlm)
 barley.rlm.df$.fitted = barley.rlm.df$.fitted - mean(barley.rlm.df$.fitted)
