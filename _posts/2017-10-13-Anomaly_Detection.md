@@ -86,9 +86,11 @@ ggplot(gen.site, aes(x = yield, y = gen)) + geom_point(size=1.5) + facet_wrap(~ 
 We can observe that the year:site interaction graph shows the dots to be reasonably spaced out, thus indicating interaction required to be considered.
 
 **Model Selection**
+
 As the data consist of outliers and considering interaction also, least squares will be potentially misleading, I choose an outlier-resistant alternative i.e rlm() with bisquare to minimize the impact.
 
 **Model Implementation**
+
 Applying RLM Model,with the goal of determining whether Morris 1931-1932 is an anomaly.
 ```{r}
 barley.rlm = rlm(yield ~ year * site + gen, psi = psi.bisquare, data = data)
@@ -146,6 +148,6 @@ facet_grid(~component)
 * Thus from above plots it is evident that Morris fails to follow the pattern of Barley yield that is exhibited across all sites. 
 * But, this should not be treated as an anomaly. Morris could have been under the influence of some sort of famine during 1931, to address the low barley yield issue.
 * The yield vs year ~ Site from Question:1 clearly states that there was no pattern observed over the years in the Barley yield across sites.
-* The ~650 Observations are convincing to believe that the Morris 1931-32 data should not be considered as a mistake. \
+* The ~650 Observations are convincing to believe that the Morris 1931-32 data should not be considered as a mistake.
 
-**Thus, this should be considered as a natural variation.**
+_**Thus, the yield for Morris should be considered as a natural variation.**_
