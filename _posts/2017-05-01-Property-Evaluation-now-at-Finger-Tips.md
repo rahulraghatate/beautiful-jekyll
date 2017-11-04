@@ -1,6 +1,28 @@
 
-## Data Preprocessing
+---
+layout: post
+title: "Property-Evaluation-now-at-Finger-Tips"
+subtitle: "Predictive Analytics using advanced ML techniques"
+tags: [Python,Feature_Selection,Ridge,Lasso, XgBoost, Sklearm, GBM, Elastic Net, Stacking, K-fold cross validation]
+gh-repo: rahulraghatate/Housing-Sale-Price-Prediction
+gh-badge: [star, fork, follow]
+---
 
+"Buying a house is a stressful thing."
+
+Contrary to the widespread belief that house prices are dependent on the generic factors like number of bedrooms and square area of house, Ames Housing dataset proves that many other factors influence the final price of homes. This dataset contains 79 explanatory variables to describe almost every aspect of the house. Generally house buyers neglect this information. As a result their price estimation is very different from the actual prices. 
+
+Below is my first Data Science Project as part of Data Mining Course, a model to predict the prices of residential homes in Ames, Iowa, using advanced regression techniques. This will provide buyers will a rough estimate of what the houses are actually worth. This in turn will help them have better negotiation deals with sellers.
+
+
+Most of the houses are bought through real estate agents. People rarely buy directly from the seller, since there are a
+lot of legal terminology involved and people are unaware of them. Hence real estate agents are trusted with the communication between buyers and sellers as well as laying down a legal contract for the transfer. This just creates a middle man and increases the cost of houses. Therefore the houses are overpriced and a buyer should have a better idea of the actual value of these houses.[2]
+There are various tools, like Zillow and Trulia, available online to assist a person with buying houses. These tools provide a price estimation of various houses and are generally free for use. These tools incorporate many factors to estimate the house prices by providing weights to each factor. For example, Zillow creates Zestimate of houses which is “calculated three times a week based on millions of public and user-submitted data points” [3]. The median error rate for these estimates are quite low. The main problem with these tools is that they are heavy on advertisements and they promote real estate agents. Zillow provides paid premium services for real estate agents and this is their main source of income.[4] 
+
+
+Estimates of actual house prices will help buyers to have better negotiations with the real estate agents, as the list price of the house and much higher than the actual price. Our prediction model will provide the buyers with these estimates. 
+
+**Python Packages**
 
 ```python
 import warnings
@@ -17,6 +39,9 @@ from scipy.stats import skew,norm
 from scipy.stats.stats import pearsonr
 ```
 
+We used the **['Ames Housing dataset'](https://www.kaggle.com/c/house-prices-advanced-regression-techniques/data)** provided by **[kaggle](https://www.kaggle.com/)** for competition **[House Prices: Advanced Regression Techniques](https://www.kaggle.com/c/house-prices-advanced-regression-techniques)**.
+
+## Data Preprocessing
 
 ```python
 train = pd.read_csv("./train.csv")
@@ -31,8 +56,9 @@ train.drop("Id", axis = 1, inplace = True)
 test.drop("Id", axis = 1, inplace = True)
 ```
 
-### Number of rows and columns
+We performed statisitical analysis of the data for finding trends in data. 
 
+### Number of rows and columns
 
 ```python
 print('Train Data: \n')
@@ -53,7 +79,6 @@ print("Number of rows: "+ str(test.shape[0]))
     Number of columns: 79
     Number of rows: 1459
     
-
 
 ```python
 #descriptive statistics summary
@@ -90,11 +115,12 @@ plt.show()
 ```
 
 
-![png](output_6_0.png)
+
+![png]({{ site.url }}/img/Property-Evaluation/output_6_0.png)]({{ site.url }}/imgProperty-Evaluation/output_6_0.png)
 
 
 
-![png](output_6_1.png)
+![png]({{ site.url }}/img/Property-Evaluation/output_6_1.png)]({{ site.url }}/imgProperty-Evaluation/output_6_1.png)
 
 
 The target variable is right skewed(positive skewness) and show peakedness. As (linear) models fits better on  normally distributed data , we require proper transformation.
@@ -114,7 +140,7 @@ data.plot.scatter(x=var, y='SalePrice', ylim=(0,800000));
 ```
 
 
-![png](output_9_0.png)
+![png]({{ site.url }}/img/Property-Evaluation/output_9_0.png)]({{ site.url }}/imgProperty-Evaluation/output_9_0.png)
 
 
 
@@ -126,7 +152,7 @@ data.plot.scatter(x=var, y='SalePrice', ylim=(0,800000));
 ```
 
 
-![png](output_10_0.png)
+![png]({{ site.url }}/img/Property-Evaluation/output_10_0.png)]({{ site.url }}/imgProperty-Evaluation/output_10_0.png)
 
 
 
@@ -138,7 +164,7 @@ data.plot.scatter(x=var, y='SalePrice', ylim=(0,800000));
 ```
 
 
-![png](output_11_0.png)
+![png]({{ site.url }}/img/Property-Evaluation/output_11_0.png)]({{ site.url }}/imgProperty-Evaluation/output_11_0.png)
 
 
 
@@ -162,7 +188,7 @@ fig.axis(ymin=0, ymax=800000);
 ```
 
 
-![png](output_15_0.png)
+![png]({{ site.url }}/img/Property-Evaluation/output_15_0.png)]({{ site.url }}/imgProperty-Evaluation/output_15_0.png)
 
 
 
@@ -176,7 +202,7 @@ plt.xticks(rotation=90);
 ```
 
 
-![png](output_16_0.png)
+![png]({{ site.url }}/img/Property-Evaluation/output_16_0.png)]({{ site.url }}/imgProperty-Evaluation/output_16_0.png)
 
 
 Note: we don't know if 'SalePrice' is in constant prices. Constant prices try to remove the effect of inflation. If 'SalePrice' is not in constant prices, it should be, so than prices are comparable over the years.
@@ -192,7 +218,7 @@ sns.heatmap(corrmat, vmax=.9, square=True);
 ```
 
 
-![png](output_19_0.png)
+![png]({{ site.url }}/img/Property-Evaluation/output_19_0.png)]({{ site.url }}/imgProperty-Evaluation/output_19_0.png)
 
 
 
@@ -224,11 +250,11 @@ plt.show()
 ```
 
 
-![png](output_21_0.png)
+![png]({{ site.url }}/img/Property-Evaluation/output_21_0.png)]({{ site.url }}/imgProperty-Evaluation/output_21_0.png)
 
 
 
-![png](output_21_1.png)
+![png]({{ site.url }}/img/Property-Evaluation/output_21_1.png)]({{ site.url }}/imgProperty-Evaluation/output_21_1.png)
 
 
 
@@ -967,9 +993,4 @@ sub = pd.DataFrame()
 sub['Id'] = test_ID
 sub['SalePrice'] = ensemble
 sub.to_csv('submission.csv',index=False)
-```
-
-
-```python
-
 ```
