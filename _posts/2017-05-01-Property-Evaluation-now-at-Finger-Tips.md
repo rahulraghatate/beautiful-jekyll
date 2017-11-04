@@ -29,7 +29,9 @@ There are various tools, like Zillow and Trulia, available online to assist a pe
 
 Estimates of actual house prices will help buyers to have better negotiations with the real estate agents, as the list price of the house and much higher than the actual price. Our prediction model will provide the buyers with these estimates. 
 
-**Python Packages**
+We used the _**['Ames Housing dataset'](https://www.kaggle.com/c/house-prices-advanced-regression-techniques/data)**_ provided by **_[kaggle]_(https://www.kaggle.com/)** for competition **_[House Prices: Advanced Regression Techniques]_(https://www.kaggle.com/c/house-prices-advanced-regression-techniques)**.
+
+**_Python Packages_**
 
 ```python
 import warnings
@@ -46,7 +48,6 @@ from scipy.stats import skew,norm
 from scipy.stats.stats import pearsonr
 ```
 
-We used the **['Ames Housing dataset'](https://www.kaggle.com/c/house-prices-advanced-regression-techniques/data)** provided by **[kaggle](https://www.kaggle.com/)** for competition **[House Prices: Advanced Regression Techniques](https://www.kaggle.com/c/house-prices-advanced-regression-techniques)**.
 
 ## Data Preprocessing
 
@@ -63,9 +64,9 @@ train.drop("Id", axis = 1, inplace = True)
 test.drop("Id", axis = 1, inplace = True)
 ```
 
-We performed statisitical analysis of the data for finding trends in data. 
+We performed following statisitical analysis of the data for finding trends in data. 
 
-### Number of rows and columns
+**_DataFrame Properties_**
 
 ```python
 print('Train Data: \n')
@@ -87,8 +88,8 @@ print("Number of rows: "+ str(test.shape[0]))
     Number of rows: 1459
     
 
+**_Statistical data summary_**
 ```python
-#descriptive statistics summary
 train['SalePrice'].describe()
 ```
 
@@ -123,20 +124,18 @@ plt.show()
 
 
 
-![png]({{ site.url }}/img/Property-Evaluation/output_6_0.png)]({{ site.url }}/imgProperty-Evaluation/output_6_0.png)
+![png]({{ site.url }}/img/Property-Evaluation/output_6_0.png)]({{ site.url }}/img/Property-Evaluation/output_6_0.png)
 
 
 
-![png]({{ site.url }}/img/Property-Evaluation/output_6_1.png)]({{ site.url }}/imgProperty-Evaluation/output_6_1.png)
+![png]({{ site.url }}/img/Property-Evaluation/output_6_1.png)]({{ site.url }}/img/Property-Evaluation/output_6_1.png)
 
 
 The target variable is right skewed(positive skewness) and show peakedness. As (linear) models fits better on  normally distributed data , we require proper transformation.
 
-    1. Transform the skewed numeric features by taking log(feature + 1) - to make features more normal
+_Transform the skewed numeric features by taking log(feature + 1) - to make features more normal_
     
-##### Transformation Performed after univariate analysis    
-
-## Relation Exploration for Few Numerical Variables
+**_Relation Exploration for Few Numerical Variables_**
 
 
 ```python
@@ -147,7 +146,7 @@ data.plot.scatter(x=var, y='SalePrice', ylim=(0,800000));
 ```
 
 
-![png]({{ site.url }}/img/Property-Evaluation/output_9_0.png)]({{ site.url }}/imgProperty-Evaluation/output_9_0.png)
+![png]({{ site.url }}/img/Property-Evaluation/output_9_0.png)]({{ site.url }}/img/Property-Evaluation/output_9_0.png)
 
 
 
@@ -159,7 +158,7 @@ data.plot.scatter(x=var, y='SalePrice', ylim=(0,800000));
 ```
 
 
-![png]({{ site.url }}/img/Property-Evaluation/output_10_0.png)]({{ site.url }}/imgProperty-Evaluation/output_10_0.png)
+![png]({{ site.url }}/img/Property-Evaluation/output_10_0.png)]({{ site.url }}/img/Property-Evaluation/output_10_0.png)
 
 
 
@@ -171,18 +170,18 @@ data.plot.scatter(x=var, y='SalePrice', ylim=(0,800000));
 ```
 
 
-![png]({{ site.url }}/img/Property-Evaluation/output_11_0.png)]({{ site.url }}/imgProperty-Evaluation/output_11_0.png)
+![png]({{ site.url }}/img/Property-Evaluation/output_11_0.png)]({{ site.url }}/img/Property-Evaluation/output_11_0.png)
 
 
 
+**_Deleting outliers_**
 ```python
-#Deleting outliers
 train = train.drop(train[(train['GrLivArea']>4000) & (train['SalePrice']<300000)].index)
 ```
 
 'TotalBsmtSF','LotArea' and 'GrLivArea' seem to be linearly related with 'SalePrice'. Both relationships are positive, which means that as one variable increases, the other also increases. In the case of 'TotalBsmtSF' and 'LotArea' we can see that the slope of the linear relationship are particularly high.
 
-## Relation Exploration for categorical features
+**_Relation Exploration for categorical features_**
 
 
 ```python
@@ -195,7 +194,7 @@ fig.axis(ymin=0, ymax=800000);
 ```
 
 
-![png]({{ site.url }}/img/Property-Evaluation/output_15_0.png)]({{ site.url }}/imgProperty-Evaluation/output_15_0.png)
+![png]({{ site.url }}/img/Property-Evaluation/output_15_0.png)]({{ site.url }}/img/Property-Evaluation/output_15_0.png)
 
 
 
@@ -209,7 +208,7 @@ plt.xticks(rotation=90);
 ```
 
 
-![png]({{ site.url }}/img/Property-Evaluation/output_16_0.png)]({{ site.url }}/imgProperty-Evaluation/output_16_0.png)
+![png]({{ site.url }}/img/Property-Evaluation/output_16_0.png)]({{ site.url }}/img/Property-Evaluation/output_16_0.png)
 
 
 Note: we don't know if 'SalePrice' is in constant prices. Constant prices try to remove the effect of inflation. If 'SalePrice' is not in constant prices, it should be, so than prices are comparable over the years.
@@ -217,15 +216,15 @@ Note: we don't know if 'SalePrice' is in constant prices. Constant prices try to
 OverallQual' and 'YearBuilt' also seem to be related with 'SalePrice'. The relationship seems to be stronger in the case of 'OverallQual', where the box plot shows how sales prices increase with the overall quality.
 
 
+**_correlation matrix for all features_**
 ```python
-#correlation matrix
 corrmat = train.corr()
 f, ax = plt.subplots(figsize=(12, 9))
 sns.heatmap(corrmat, vmax=.9, square=True);
 ```
 
 
-![png]({{ site.url }}/img/Property-Evaluation/output_19_0.png)]({{ site.url }}/imgProperty-Evaluation/output_19_0.png)
+![png]({{ site.url }}/img/Property-Evaluation/output_19_0.png)]({{ site.url }}/img/Property-Evaluation/output_19_0.png)
 
 
 
@@ -240,10 +239,9 @@ print("Kurtosis: %f" % train['SalePrice'].kurt())
     
 
 
+**_log transforming the target and Kernel Density plot for Sale Price values_**
 ```python
-#log transform the target:
 train["SalePrice"] = np.log1p(train["SalePrice"])
-
 # Kernel Density Plot
 sns.distplot(train.SalePrice,fit=norm);
 plt.ylabel('Frequency')
@@ -257,14 +255,14 @@ plt.show()
 ```
 
 
-![png]({{ site.url }}/img/Property-Evaluation/output_21_0.png)]({{ site.url }}/imgProperty-Evaluation/output_21_0.png)
+![png]({{ site.url }}/img/Property-Evaluation/output_21_0.png)]({{ site.url }}/img/Property-Evaluation/output_21_0.png)
 
 
 
-![png]({{ site.url }}/img/Property-Evaluation/output_21_1.png)]({{ site.url }}/imgProperty-Evaluation/output_21_1.png)
+![png]({{ site.url }}/img/Property-Evaluation/output_21_1.png)]({{ site.url }}/img/Property-Evaluation/output_21_1.png)
 
 
-
+**_Sample training dataframe__**
 ```python
 train.head()
 ```
@@ -442,6 +440,7 @@ train.head()
 
 
 
+**_Exploring Missing value ratio_**
 ```python
 all_data = pd.concat((train.loc[:,'MSSubClass':'SaleCondition'],
                       test.loc[:,'MSSubClass':'SaleCondition']))
@@ -567,22 +566,21 @@ missing_data.head(20)
 
 
 
-## Imputing missing values
+**_Imputing missing values_**
 
-Based on feature description provided, following features if has NA means it's absent("None"). 
+Based on feature description provided, following features if has **NA** means it's absent(**"None"**). 
 
 
 ```python
 for col in ('PoolQC','MiscFeature','GarageType','Alley','Fence','FireplaceQu','GarageFinish', 'GarageQual', 'GarageCond','MasVnrType','MSSubClass'):
     all_data[col] = all_data[col].fillna('None')
-```
 
-
-```python
 # Replacing missing data with 0 (Since No garage = no cars in such garage).
+
 for col in ('GarageYrBlt', 'GarageArea', 'GarageCars'):
     all_data[col] = all_data[col].fillna(0)
 # missing values are likely zero for having no basement 
+
 for col in ('BsmtFinSF1', 'BsmtFinSF2', 'BsmtUnfSF','TotalBsmtSF', 'BsmtFullBath', 'BsmtHalfBath'):
     all_data[col] = all_data[col].fillna(0)
 #     
@@ -591,23 +589,20 @@ all_data["MasVnrArea"] = all_data["MasVnrArea"].fillna(0)
 
 
 ```python
+
 # For below categorical basement-related features, NaN means that there is no basement.
+
 for col in ('BsmtQual', 'BsmtCond', 'BsmtExposure', 'BsmtFinType1', 'BsmtFinType2'):
     all_data[col] = all_data[col].fillna('None')
-```
 
+# Group by neighborhood and fill in missing value by the median LotFrontage of all the neighborhood
 
-```python
-#Group by neighborhood and fill in missing value by the median LotFrontage of all the neighborhood
 all_data["LotFrontage"] = all_data.groupby("Neighborhood")["LotFrontage"].transform(
     lambda x: x.fillna(x.median()))
-```
 
-
-```python
 # Setting mode value for missing entries 
 
-#MSZoning classification : 'RL' is common
+# MSZoning classification : 'RL' is common
 all_data['MSZoning'] = all_data['MSZoning'].fillna(all_data['MSZoning'].mode()[0])
 
 # Functional : NA = typical
@@ -635,7 +630,7 @@ all_data = all_data.drop(['Utilities'], axis=1)
 
 
 ```python
-# Transforming required numerical features to categorical
+# Transformation required for numerical features to categorical
 
 all_data['MSSubClass'] = all_data['MSSubClass'].apply(str)
 all_data['OverallCond'] = all_data['OverallCond'].astype(str)
@@ -643,11 +638,8 @@ all_data['YrSold'] = all_data['YrSold'].astype(str)
 all_data['MoSold'] = all_data['MoSold'].astype(str)
 ```
 
-
+**_Label Encoding_** some categorical variables for information in their ordering set
 ```python
-#Label Encoding some categorical variables 
-# for information in their ordering set
-
 from sklearn.preprocessing import LabelEncoder
 cols = ('FireplaceQu', 'BsmtQual', 'BsmtCond', 'GarageQual', 'GarageCond', 
         'ExterQual', 'ExterCond','HeatingQC', 'PoolQC', 'KitchenQual', 'BsmtFinType1', 
@@ -675,10 +667,9 @@ all_data['TotalSF'] = all_data['TotalBsmtSF'] + all_data['1stFlrSF'] + all_data[
 ```
 
 
+**_log transform skewed numeric features_**
 ```python
-#log transform skewed numeric features:
 numeric_feats = all_data.dtypes[all_data.dtypes != "object"].index
-
 skewed_feats = all_data[numeric_feats].apply(lambda x: skew(x.dropna())).sort_values(ascending=False) #compute skewness
 print("\nSkew in numerical features: \n")
 skewness = pd.DataFrame({'Skew' :skewed_feats})
@@ -741,7 +732,7 @@ skewness.head(5)
 
 
 
-#### Box Cox Transformation of (highly) skewed features
+**_Box Cox Transformation of (highly) skewed features_**
 
 
 ```python
@@ -758,7 +749,7 @@ for feat in skewed_features:
     There are 59 skewed numerical features to Box Cox transform
     
 
-#### Adding dummy categorical features
+**_Dummy Variables for categorical features_**
 
 
 ```python
@@ -778,8 +769,9 @@ train = pd.DataFrame(all_data[:ntrain])
 test = pd.DataFrame(all_data[ntrain:])
 ```
 
-### Regression Modeling
+## Regression Modeling
 
+**_Importing Sklearn Packages for Modeling_**
 
 ```python
 from sklearn.linear_model import ElasticNet, Lasso,  BayesianRidge, LassoLarsIC
@@ -809,7 +801,7 @@ def rmsle_cv(model):
     return(rmse)
 ```
 
-### Implementing Regression Models
+## _Implementation of following Regression Models_
     1. Lasso Regression
     2. Kernel Ridge Regression
     3. Elastic Net Regression
@@ -818,6 +810,7 @@ def rmsle_cv(model):
     6. Light GBM
 
 
+**_Model Parameters Setting_**
 ```python
 #1
 lasso = make_pipeline(RobustScaler(), Lasso(alpha =0.0005, random_state=1))
@@ -845,7 +838,7 @@ model_lgb = lgb.LGBMRegressor(objective='regression',num_leaves=5,
                               min_data_in_leaf =6, min_sum_hessian_in_leaf = 11)
 ```
 
-### Scores for above base models
+**_Scores for Base Models_
 
 
 ```python
@@ -887,7 +880,7 @@ print("LGBM score: {:.4f} ({:.4f})\n" .format(score.mean(), score.std()))
 
 ## Stacking Models
 
-#### Approach: Averaging Base Models
+**_Approach: Averaging Base Models_**
 
 
 
@@ -929,16 +922,21 @@ print(" Averaged base models score: {:.4f} ({:.4f})\n".format(score.mean(), scor
     
     
 
+**_Defining rmsle evaluation function_**
+
+
 
 ```python
-# Defining rmsle evaluation function
 def rmsle(y, y_pred):
     return np.sqrt(mean_squared_error(y, y_pred))
 ```
 
 
+**_Training and Prediction for Stacked Model_**
+
+
+
 ```python
-#Final Training and Prediction
 
 #StackedRegressor:
 
@@ -952,15 +950,14 @@ print(rmsle(y_train, stacked_train_pred))
     
 
 
-```python
-# XGBoost
+**_XGBoost_Model and LightGBM(Gradient_Boosted_Model)_**
 
+
+```python
 model_xgb.fit(train, y_train)
 xgb_train_pred = model_xgb.predict(train)
 xgb_pred = np.expm1(model_xgb.predict(test))
 print(rmsle(y_train, xgb_train_pred))
-
-# LightGBM
 
 model_lgb.fit(train, y_train)
 lgb_train_pred = model_lgb.predict(train)
@@ -986,8 +983,8 @@ print(rmsle(y_train,stacked_train_pred*0.70 +
     
 
 
+## Ensembled Final Predictions
 ```python
-# Ensembled Predictions:
 
 ensemble = stacked_pred*0.70 + xgb_pred*0.15 + lgb_pred*0.15
 ```
