@@ -1,20 +1,23 @@
 ---
 layout: post
 title: "Exploring police stops & arrests vs. ethnicity in NYC[1998-99]"
-tags: [R,Time-Series,Anomaly-Detection, ggplot2]
+subtitle: "Possoin Regression"
+tags: [R,Possoin Regression, ggplot2, GLM, count data]
 gh-repo: rahulraghatate/Exploratory-Data-Analysis
 gh-badge: [star, fork, follow]
-permalink: /r/anomaly_detection/
+permalink: /r/NYC_arrests_vs_ethnicity/
 comments: true
 show-share: true
 ---
 
 **Problem Statement**
-Hypothesis:
+
+Hypothesis:\
 Some ethnic groups have been stopped at rates not justified by either their **arrest rate** or their **location** (as measured by precinct).
 
 
-*Data*
+**Data**
+
 Gelman and Hill have data on police stops in New York City in 1998–1999, during Giuliani’s mayoralty.
 
 Data is available at **[this]("http://www.stat.columbia.edu/~gelman/arm/examples/police/frisk_with_noise.dat")** link.
@@ -25,6 +28,7 @@ frisk =read.table("http://www.stat.columbia.edu/~gelman/arm/examples/police/fris
 nrow(frisk)
 ```
 [![1]({{ site.url }}/img/arrests_vs_ethnicity/1.PNG)]({{ site.url }}/img/arrests_vs_ethnicity/1.PNG)
+
 Let's see the summary statistics
 ```{r}
 summary(frisk)
@@ -72,6 +76,7 @@ ggplot(frisk.sum,aes(x =stops,
   facet_wrap(~eth,ncol =1)
 ```
 [![plot1]({{ site.url }}/img/arrests_vs_ethnicity/plot1.PNG)]({{ site.url }}/img/arrests_vs_ethnicity/plot1.PNG)
+
 **Findings**
 + The distributions of stops for black and Hispanic people are very different from the distribution for white people though there may be multiple explanations for this. 
 
@@ -93,14 +98,12 @@ Lets build a model for more insights and supporting facts.
 
 As we have **counts** data, lets use Poisson Regression.
 
-Poisson regression is another form of GLM. 
+Poisson regression is another form of GLM. \
 In a standard Poisson regression, the response has a Poisson distribution with the log of the expected value given by a linear function of the predictors. 
 
 In the single-variable case:
 
-log(E[Y|x]) = _β0+β1x_
-
-
+log(E[Y|x]) = _Beta0+Beta1x_
 ```{r}
 constant.glm =glm(stops ~1,family =poisson,data =frisk.sum)
 #install.packages('arm')
@@ -115,8 +118,10 @@ e^(6.37) = 584 on the original scale.
 
 That is, the number of stops for each ethnic group within each precinct is modeled as a random variable with distribution Poisson(584)
 
-**_(residual)deviance_** --> Low deviance is good, as long as you’re not overfitting. In particular, every time you add a degree of freedom, you should expect reduce the deviance by 1 if you’re just adding random noise. So if you’re not overfitting when you fit a complex model, you should expect to reduce the deviance by more than you increase the degrees of freedom. Now this model is obviously wrong. We might, for example, think that the number of stops for an ethnic groups in a precinct should be proportional to the number of arrests for that ethnicity-precinct (though this is controversial.) In a GLM, we can model this using an offset:
+**_(residual)deviance_** \
+Low deviance is good, as long as you’re not overfitting. In particular, every time you add a degree of freedom, you should expect reduce the deviance by 1 if you’re just adding random noise. So if you’re not overfitting when you fit a complex model, you should expect to reduce the deviance by more than you increase the degrees of freedom. Now this model is obviously wrong. We might, for example, think that the number of stops for an ethnic groups in a precinct should be proportional to the number of arrests for that ethnicity-precinct (though this is controversial.) 
 
+In a GLM, we can model this using an offset:
 ```{r}
 offset.glm =glm(stops ~1,family =poisson,
                 offset =log(past.arrests),
@@ -128,7 +133,9 @@ display(offset.glm)
 As linear predictor is on the log scale, the offset also has to be logged. 
 
 **Model**
-log[E(stops|past arrests)] =−0.59 + log(past arrests)
+
+log(E(stops|past arrests)) =−0.59 + log(past arrests)
+
 or (taking the exponential of both sides)
 
 E(stops|past arrests) =e^{−0.59}+log(past arrests)= 0.56 × past arrests
@@ -147,6 +154,7 @@ display(eth.glm)
 The deviance has dropped substantially again. 
 
 **New Model**
+
 E(stops) = multiplier for ethnic group × past arrests
 
 where the multipliers for black, Hispanic, and white respectively are:
@@ -159,7 +167,7 @@ print(multipliers)
 
 So far we have seen that black and Hispanic people were stopped at a proportionately higher fraction of their arrest rate compared to white people. 
 
-However, as the data isn’t from a randomized experiment, there may be confounding. 
+However, as the data isn’t from a randomized experiment, there may be confounding.\
 For example, black and Hispanic people generally live in precincts with higher stop rates. (Whether this is in itself evidence of bias is again, controversial.) 
 
 Since this is exploratory work, we won’t attempt to prove cause-and-effect, but we’ll see what happens if we include precinct as an explanatory variable.
@@ -180,6 +188,7 @@ coefficients(summary(precinct.glm))[1:6,1:2]
 After controlling for precinct, the differences between the white and minority coefficients becomes evenbigger.
 
 **Checking the model**
+
 Plot of the residuals against the fitted values on the response (original) scale
 ```{r}
 precinct.fitted =fitted.values(precinct.glm)
@@ -192,7 +201,9 @@ ggplot(precinct.glm.df,aes(x =.fitted,y =.resid)) +
 [![plot3]({{ site.url }}/img/arrests_vs_ethnicity/plot3.PNG)]({{ site.url }}/img/arrests_vs_ethnicity/plot3.PNG)
 
 **Findings**
-+ The smoother isn't flat maybe because of residual heteroskedasticity(spread out randomly). The heteroskedasticity is not a bug: Poissons are supposed to be heteroskedastic. Poisson(λ)random variable has variance $\lambda$ and standard deviation $\sqrt{\lambda}$. So the typical size ofthe residuals should go up as the square root of the fitted value.
+
++ The smoother isn't flat maybe because of residual heteroskedasticity(spread out randomly). 
++ The heteroskedasticity is not a bug: Poissons are supposed to be heteroskedastic. Poisson(λ)random variable has variance $\lambda$ and standard deviation $\sqrt{\lambda}$. So the typical size of the residuals should go up as the square root of the fitted value.
 + To remove this effect, lets create standardized residuals by dividing the raw residuals by the square root of the fitted value. 
 
 Plot of standardized residuals against the log fitted values to reduce the distortions causedby skewness.
@@ -208,6 +219,7 @@ ggplot(precinct.glm.df,aes(x =log(.fitted),y =.std.resid)) +
 This is better, though far from perfect. There’s still some nonlinearity left in the smoother, though the amount is relatively small. If prediction was the goal, a nonparametric model would probably provide an improvement.
 
 **Dispersion Phenomenon**
+
  If the Poisson model were correct, the standardized residuals should be on a similar scale to the standard normal– that is, the vast majority should be within ±2. From the previous graph, that’s clearly not the case.
 
 Measuring the overdispersion in the data. It can be done by two methods;
@@ -225,10 +237,11 @@ overdispersion
 
 This is much more than 1. In fact, this happens most of the time with count data – the data is usually more dispersed than the Poisson model.
 
-**How bad it is?
+**How bad it is?**
+
 There are problems with above model. But are they so bad that we can’t draw conclusions from it?
 
-Lets simulate a fake set of data, and see if it closely resembles the actual set.
+Lets simulate a fake set of data, and see if it closely resembles the actual set.\
 Each observation is a realization of a Poisson random variable with lambda given by fitted value.
 ```{r}
 sim1 =rpois(nrow(frisk.sum),lambda =fitted.values(precinct.glm))
@@ -245,6 +258,7 @@ ggplot(sim.long,aes(x =number)) +
 [![12]({{ site.url }}/img/arrests_vs_ethnicity/12.PNG)]({{ site.url }}/img/arrests_vs_ethnicity/12.PNG)
 [![13]({{ site.url }}/img/arrests_vs_ethnicity/13.PNG)]({{ site.url }}/img/arrests_vs_ethnicity/13.PNG)
 [![plot5]({{ site.url }}/img/arrests_vs_ethnicity/plot5.PNG)]({{ site.url }}/img/arrests_vs_ethnicity/plot5.PNG)
+
 If we look at the histograms, there doesn’t seem to be much difference. But what happens if we fit a model to the simulated data and look at its residuals? 
 
 We’ll find residuals and do a two-sample QQ plot of them against the original residuals.
@@ -263,6 +277,7 @@ If the model were correct, this QQ plot should be close to a line through the or
 The simulation here is overkill.
 
 **Fixing overdispersion**
+
 Using the _quasipoisson family_ instead of the Poisson.
 ```{r}
 precinct.quasi =glm(stops ~factor(eth) +factor(precinct),
@@ -272,7 +287,7 @@ coefficients(summary(precinct.quasi))[1:6,1:2]
 ```
 [![14]({{ site.url }}/img/arrests_vs_ethnicity/14.PNG)]({{ site.url }}/img/arrests_vs_ethnicity/14.PNG)
 
-Note:
+Note:\
 + coefficients look the same as they were in the standard Poisson case.
 + standard errors have been inflated by the square root of their overdispersion.
 + fitted values haven’t changed
@@ -312,6 +327,7 @@ ggplot(eth.co.df,aes(x =ethnicity,y =estimate,ymin =lower,ymax =upper)) +
 The confidence intervals don’t include 1. This would be consistent with a hypothesis of bias against minorities,though we should think very carefully about other confounding variables before drawing a firm conclusion(e.g. type of crime, which we ignored.)
 
 **Future work**
+
 Implement alternative approaches:
   + **Negative binomial regression** : alternative to the quasipoisson when the count data is overdispersed.
   + **Nonparametric approaches** like _loess_ and _GAM_ can give better fit for the conditional expectation, at the cost of making inference much more complicated.
