@@ -12,16 +12,15 @@ show-share: true
 
 **Problem Statement**
 
-Hypothesis:\
+**Hypothesis:**
+
 Some ethnic groups have been stopped at rates not justified by either their **arrest rate** or their **location** (as measured by precinct).
 
 
 **Data**
 
-Gelman and Hill have data on police stops in New York City in 1998–1999, during Giuliani’s mayoralty.
-
-Data is available at **[this]("http://www.stat.columbia.edu/~gelman/arm/examples/police/frisk_with_noise.dat")** link.
-
+Gelman and Hill have data on police stops in New York City in 1998–1999, during Giuliani’s mayoralty.\
+Data is available at **[this]("http://www.stat.columbia.edu/~gelman/arm/examples/police/frisk_with_noise.dat")** link.\
 Noise added for confidentiality. The first few rows of this file are a description.
 ```{r}
 frisk =read.table("http://www.stat.columbia.edu/~gelman/arm/examples/police/frisk_with_noise.dat",skip =6,header =TRUE)
@@ -34,8 +33,8 @@ Let's see the summary statistics
 summary(frisk)
 ```
 [![2]({{ site.url }}/img/arrests_vs_ethnicity/2.PNG)]({{ site.url }}/img/arrests_vs_ethnicity/2.PNG)
-Counts of police stops for all combinations based on:
 
+Counts of police stops for all combinations based on:
 + 75 precincts
 +  3 ethnicities of the person stopped(1 = black, 2 = Hispanic, 3 = white)
 +  4 types of crime (violent, weapons, property, anddrug)
@@ -52,6 +51,7 @@ frisk.sum =aggregate(cbind(past.arrests, stops) ~ precinct + eth, sum,data =fris
 nrow(frisk.sum)
 ```
 [![3]({{ site.url }}/img/arrests_vs_ethnicity/3.PNG)]({{ site.url }}/img/arrests_vs_ethnicity/3.PNG)
+
 Lets have a look at summary statistics
 ```{r}
 summary(frisk.sum)
@@ -134,11 +134,11 @@ As linear predictor is on the log scale, the offset also has to be logged.
 
 **Model**
 
-log(E(stops|past arrests)) =−0.59 + log(past arrests)
+log[E(stops\|st arrests)] =−0.59 + log(past arrests)
 
 or (taking the exponential of both sides)
 
-E(stops|past arrests) =e^{−0.59}+log(past arrests)= 0.56 × past arrests
+E[stops\|past arrests] =e^{−0.59}+log(past arrests)= 0.56 × past arrests
 
 The deviance of this model is much lower than the constant model, so lot of improvement in the fit.
 
