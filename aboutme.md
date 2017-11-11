@@ -1,12 +1,21 @@
 ---
 layout: page
 title: About me
-subtitle: Data Scientist and Researcher
+subtitle: Data Scientist
 ---
 
-My name is Rahul Vijay Raghatate and I am a Data Enthusiast with business acumen specialized in machine learning algorithms and statistical modeling and analysis. Currently, I am inclined towards Deep Learning and Neural Network implementation in spectrum of domains. I am working on DNN based speech separation and speaker recognition system as my research project under Prof. Donald Williamson at Indiana University. And in the capacity of Data Consultant at Harlem Bee, I am working on Analytics and Visualization for Business Development and Seed Funding Improvement.
+My name is Rahul Vijay Raghatate and I am a Data Enthusiast with business acumen specialized in machine learning algorithms and statistical modeling and analysis. I am proficient in data engineering, ML based analytics/modeling, and visualization. 
 
-Currently Seeking Full-time Opportunities in Data Science/Analytics, Data Engineering, BA and Consulting.
+I am pursuing my Masters in Data Science[2016-2018] at Indiana University and improvising my expertise in Advanced Statistics, Deep Learning, and Neural Networks applicability in spectrum of domains. As a Graduate Research Assistant under Prof. Donald Williamson, I am working on DNN based speech separation and speaker recognition system. Also, in the capacity of Data Analytics Consultant at Harlem Bee, I am working on analytics based projects helpful for business development seed-fund acquiring.
+
+Actively **seeking full-time opportunities** in Data Science/Analytics, Data Engineering, Quantitative Research, and Consulting.
+
+
+[**[Download Resume](https://github.com/rahulraghatate/rahulraghatate.github.io/blob/master/Files/Resume.pdf)**]     | [**[Download Cover Letter](https://github.com/rahulraghatate/rahulraghatate.github.io/blob/master/Files/Cover_Letter.pdf)**] |                                        [**[Github Profile](https://github.com/rahulraghatate)**]
+
+The [Projects](https://rahulraghatate.github.io/projects/) and [Home](https://rahulraghatate.github.io/) page showcase some of my work.
+
+
 
 ### Education
 
