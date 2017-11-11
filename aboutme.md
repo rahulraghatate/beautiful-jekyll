@@ -1,10 +1,9 @@
 ---
 layout: page
 title: About me
-subtitle: Data Scientist
-subsubtitle: Actively **seeking full-time opportunities** in Data Science/Analytics, Data Engineering, Quantitative Research, and Consulting.
+subtitle: Data Scientist <\br> Actively **seeking full-time opportunities** in Data Science/Analytics, Data Engineering, Quantitative Research, and Consulting.
 ---
-
+\center
 My name is Rahul Vijay Raghatate and I am a Data Enthusiast with business acumen specialized in machine learning algorithms and statistical modeling and analysis. I am proficient in data engineering, ML based analytics/modeling, and visualization. 
 
 I am pursuing my Masters in Data Science[2016-2018] at Indiana University and improvising my expertise in Advanced Statistics, Deep Learning, and Neural Networks applicability in spectrum of domains. As a Graduate Research Assistant under Prof. Donald Williamson, I am working on DNN based speech separation and speaker recognition system. Also, in the capacity of Data Analytics Consultant at Harlem Bee, I am working on analytics based projects helpful for business development seed-fund acquiring.
@@ -15,7 +14,7 @@ Actively **seeking full-time opportunities** in Data Science/Analytics, Data Eng
 [**[Resume](https://drive.google.com/open?id=0B2K6NkS5WwfraVJzaGV2dE95LXM)**]  | [**[Cover Letter](https://drive.google.com/open?id=13_fvlnnSzdc4DHD7W30fwsg9By6JIeSL)**] | [**[Github Profile](https://github.com/rahulraghatate)**]
 
 The [Projects](https://rahulraghatate.github.io/projects/) and [Home](https://rahulraghatate.github.io/) page showcase some of my work.
-
+\center
 
 
 ### Education
