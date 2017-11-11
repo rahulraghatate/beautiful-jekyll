@@ -19,8 +19,10 @@ Some ethnic groups have been stopped at rates not justified by either their **ar
 
 **Data**
 
-Gelman and Hill have data on police stops in New York City in 1998–1999, during Giuliani’s mayoralty.\
-Data is available at **[this]("http://www.stat.columbia.edu/~gelman/arm/examples/police/frisk_with_noise.dat")** link.\
+Gelman and Hill have data on police stops in New York City in 1998–1999, during Giuliani’s mayoralty.
+
+Data is available at **[this]("http://www.stat.columbia.edu/~gelman/arm/examples/police/frisk_with_noise.dat")** link.
+
 Noise added for confidentiality. The first few rows of this file are a description.
 ```{r}
 frisk =read.table("http://www.stat.columbia.edu/~gelman/arm/examples/police/frisk_with_noise.dat",skip =6,header =TRUE)
