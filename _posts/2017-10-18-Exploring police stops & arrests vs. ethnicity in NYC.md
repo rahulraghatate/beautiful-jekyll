@@ -9,11 +9,6 @@ comments: true
 show-share: true
 ---
 
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
-```
-
 **Problem Statement**
 Hypothesis:
 Some ethnic groups have been stopped at rates not justified by either their **arrest rate** or their **location** (as measured by precinct).
