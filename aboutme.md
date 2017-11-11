@@ -11,7 +11,7 @@ I am pursuing my Masters in Data Science[2016-2018] at Indiana University and im
 Actively **seeking full-time opportunities** in Data Science/Analytics, Data Engineering, Quantitative Research, and Consulting.
 
 
-[**[Download Resume](https://github.com/rahulraghatate/rahulraghatate.github.io/blob/master/Files/Resume.pdf)**]     | [**[Download Cover Letter](https://github.com/rahulraghatate/rahulraghatate.github.io/blob/master/Files/Cover_Letter.pdf)**] |                                        [**[Github Profile](https://github.com/rahulraghatate)**]
+[**[Resume](https://drive.google.com/open?id=0B2K6NkS5WwfraVJzaGV2dE95LXM)**  | **[Cover Letter](https://drive.google.com/open?id=13_fvlnnSzdc4DHD7W30fwsg9By6JIeSL)** | **[Github Profile](https://github.com/rahulraghatate)**]
 
 The [Projects](https://rahulraghatate.github.io/projects/) and [Home](https://rahulraghatate.github.io/) page showcase some of my work.
 
