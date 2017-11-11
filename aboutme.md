@@ -1,7 +1,7 @@
 ---
 layout: page
 title: About me
-subtitle: Data Scientist
+subtitle: Data Scientist \\Actively **seeking full-time opportunities** in Data Science/Analytics, Data Engineering, Quantitative Research, and Consulting.
 ---
 
 My name is Rahul Vijay Raghatate and I am a Data Enthusiast with business acumen specialized in machine learning algorithms and statistical modeling and analysis. I am proficient in data engineering, ML based analytics/modeling, and visualization. 
