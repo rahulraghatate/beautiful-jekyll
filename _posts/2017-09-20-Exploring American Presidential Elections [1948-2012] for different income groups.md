@@ -9,8 +9,10 @@ comments: true
 show-share: true
 ---
 
-For the study of Logistic Regression and Weighted Regression we will be using _ANES Time Series Cumulative Data_, containing election data from **1948 to 2012**.
+For the study of Logistic Regression and Weighted Regression we will be using _ANES Time Series Cumulative Data_, containing election data from **1948 to 2012**.\
+
 **Download Data** from [this](http://www.electionstudies.org/studypages/download/datacenter_all_datasets.php) link
+
 The data is very messy. Let's read the STATA file using rio library(useful for exotic data formats)
 ```{r}
 library(rio)
@@ -38,8 +40,8 @@ where the number represents below ranges
 4: 68 to 95 percentile
 5: 96 to 100 percentile
 
-It has zeroes and also NA’s which are missing values.
-This is an _ordinal variable_ but we might find some advantages in treating it as _quantitative_.
+It has zeroes and also NA’s which are missing values.\
+This is an _ordinal variable_ but we might find some advantages in treating it as _quantitative_.\
 Using **year** [_VCF0004_] for each observation.
 ```{r}
 year = ANES$VCF0004
@@ -47,7 +49,7 @@ summary(year)
 ```
 [![sum3]({{ site.url }}/img/election_income/sum3.PNG)]({{ site.url }}/img/election_income/sum3.JPG)
 
-Lets use the binary variable **vote** which is [_VCF0704a_] provides two-party Presidential vote.
+Lets use the binary variable **vote** which is [_VCF0704a_] provides two-party Presidential vote.\
 Here, we will consider votes for the third-parties or who didn’t vote are treated as missing values.
 ```{r}
 vote = ANES$VCF0704a
@@ -112,7 +114,7 @@ library(ggplot2)
 ggplot(ANES1992,aes(x =income,y =Republican)) +
   geom_jitter(height =0.1,width =0.25)
 ```
-[![11]({{ site.url }}/img/election_income/11.PNG)]({{ site.url }}/img/election_income/11.JPG)
+[![1]({{ site.url }}/img/election_income/1.PNG)]({{ site.url }}/img/election_income/1.JPG)
 
 Lets look at quantitative summary:
 ```{r}
@@ -152,9 +154,10 @@ $P(Bush)= \frac{e^y}{1+e^y}$ where,
 
 y=logit[P(Bush)]
 
-**“divide by 4”** rule 
-_The maximum change in probability associated with a one unit change in x is the coefficient of x divided by four_
-For each income group change the model probability changes by up to about 7.5%.Consider income group 4 to group 5.
+**“divide by 4”** rule \
+_The maximum change in probability associated with a one unit change in x is the coefficient of x divided by four_.
+For each income group change the model probability changes by up to about 7.5%.\
+Consider income group 4 to group 5.
 ```{r}
 library(boot)
 inv.logit(-1.27+0.298*4)
@@ -167,7 +170,8 @@ The modern survey results are rarely a true simple random sample from the popula
 
 The ANES variable _VCF0009z_ contains weights to make the sample resemble the demographics of the Current Population Survey.
 
-Technically once we have weights we’re no longer fitting a binomial, so using _family = quasibinomial_
+Technically once we have weights we’re no longer fitting a binomial, so using \
+_family = quasibinomial_
 ```{r}
 Bush.weighted.logit =glm(Republican ~ income,family =quasibinomial,
                          weights =survey.weights,data =ANES1992)
@@ -284,7 +288,7 @@ ggplot(income.prop.long,
 ```
 [![5]({{ site.url }}/img/election_income/5.PNG)]({{ site.url }}/img/election_income/5.JPG)
 
-** Findings**
+**Findings**
 * The top income group is reliably the most Republican, but the bottom income group varies in voting
 * In 1948 there were pretty big differences between income groups, but in the 1950s the differences between all groups except the richest were small.
 * There are two possibilities of aberration, 
@@ -303,8 +307,8 @@ ggplot(income.prop.long,
 [![6]({{ site.url }}/img/election_income/6.PNG)]({{ site.url }}/img/election_income/6.JPG)
 There is big magnitude of the uptick in Republicanism for the highest income group for almost every year.
 
-Footnotes:
-ggplot2 library functions used:
+**_Footnotes:_**\
+ggplot2 library functions used:\
   + ggplot()
   + geom_point()
   + geom_line()
