@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Exploring voting vs income group relation for American Presidential Elections [1948-2012] using Logistic/Weighted Logistic Regression"
+title: "Exploring American Presidential Elections [1948-2012] using Logistic/Weighted Regression"
 tags: [R,Logistic Regression, Binary Classification, ggplot2]
 gh-repo: rahulraghatate/Exploratory-Data-Analysis
 gh-badge: [star, fork, follow]
@@ -9,27 +9,27 @@ comments: true
 show-share: true
 ---
 
-
-For the study of ____ we will be using _ANES Time Series Cumulative Data_ file, containing data from **1948 to 2012**.
-
+For the study of Logistic Regression and Weighted Regression we will be using _ANES Time Series Cumulative Data_, containing election data from **1948 to 2012**.
 **Download Data** from [this](http://www.electionstudies.org/studypages/download/datacenter_all_datasets.php) link
-
 The data is very messy. Let's read the STATA file using rio library(useful for exotic data formats)
 ```{r}
 library(rio)
 ANES=import("anes_timeseries_cdf.dta")
 ```
-
 **SNEAK PEAK at data**
 ```{r}
 head(ANES)
 ```
+[![sum1]({{ site.url }}/img/election_income/sum1.PNG)]({{ site.url }}/img/election_income/sum1.JPG)
+
 **What do we care about?** 
 Lets explore 'income' which is 'VCF0114' as per the [codebook].
 ```{r}
 income = ANES$VCF0114
 summary(income)
 ```
+[![sum2]({{ site.url }}/img/election_income/sum2.PNG)]({{ site.url }}/img/election_income/sum2.JPG)
+
 Levels for Income [1 to 5]:
 where the number represents below ranges
 1:  0 to 16 percentile
@@ -39,22 +39,22 @@ where the number represents below ranges
 5: 96 to 100 percentile
 
 It has zeroes and also NA’s which are missing values.
-
 This is an _ordinal variable_ but we might find some advantages in treating it as _quantitative_.
-
 Using **year** [_VCF0004_] for each observation.
-
 ```{r}
 year = ANES$VCF0004
 summary(year)
 ```
-Lets use the binary variable **vote** which is [_VCF0704a_] provides two-party Presidential vote.
+[![sum3]({{ site.url }}/img/election_income/sum3.PNG)]({{ site.url }}/img/election_income/sum3.JPG)
 
+Lets use the binary variable **vote** which is [_VCF0704a_] provides two-party Presidential vote.
 Here, we will consider votes for the third-parties or who didn’t vote are treated as missing values.
 ```{r}
 vote = ANES$VCF0704a
 summary(vote)
 ```
+[![sum4]({{ site.url }}/img/election_income/sum4.PNG)]({{ site.url }}/img/election_income/sum4.JPG)
+
 Convention: 
 “1” means the Democrat
 “2” means the Republican
@@ -65,11 +65,15 @@ We want everything to be coded as 0, 1, or NA. Therefore, changing the zeroes to
 vote[vote==0]=NA
 summary(vote)
 ```
+[![sum5]({{ site.url }}/img/election_income/sum5.PNG)]({{ site.url }}/img/election_income/sum5.JPG)
+
 Subtract 1 from vote to make "0" and "1" categories
 ```{r}
 vote = vote-1
 summary(vote)
 ```
+[![sum6]({{ site.url }}/img/election_income/sum6.PNG)]({{ site.url }}/img/election_income/sum6.JPG)
+
 Renaming the _vote_ variable to _Republican_ as now the variable represent a two-party vote for Republicans
 ```{r}
 Republican = vote
@@ -79,14 +83,16 @@ Let's consider another variable _survey.weights_ for our model
 survey.weights = ANES$VCF0009z
 summary(survey.weights)
 ```
-### Dataframe for Modeling
+[![sum7]({{ site.url }}/img/election_income/sum7.PNG)]({{ site.url }}/img/election_income/sum7.JPG)
+
+**Dataframe for Modeling**
 ```{r}
 ANES.df =data.frame(year, income, Republican,survey.weights)
 summary(ANES.df)
 ```
+[![sum8]({{ site.url }}/img/election_income/sum8.PNG)]({{ site.url }}/img/election_income/sum8.JPG)
 
 **Bush against Bill Clinton**
-
 Lets see the statitics of _1992 election_
 ```{r}
 ANES1992 =subset(ANES.df, year ==1992)
@@ -94,6 +100,10 @@ summary(ANES1992)
 #Counts for votes
 summary(factor(ANES1992$Republican))
 ```
+[![sum9]({{ site.url }}/img/election_income/sum9.PNG)]({{ site.url }}/img/election_income/sum9.JPG)
+
+[![sum10]({{ site.url }}/img/election_income/sum10.PNG)]({{ site.url }}/img/election_income/sum10.JPG)
+
 What's the relation between income and vote?
 
 Plotting the scatterplot with including jitter as there are less levels and binary response variable
@@ -102,7 +112,7 @@ library(ggplot2)
 ggplot(ANES1992,aes(x =income,y =Republican)) +
   geom_jitter(height =0.1,width =0.25)
 ```
-[![1]({{ site.url }}/img/election_income/1.PNG)]({{ site.url }}/img/election_income/1.JPG)
+[![11]({{ site.url }}/img/election_income/11.PNG)]({{ site.url }}/img/election_income/11.JPG)
 
 Lets look at quantitative summary:
 ```{r}
@@ -126,12 +136,20 @@ We can also fit it explicitly:
 Bush.logit =glm(Republican ~ income,family =binomial,data=ANES1992)
 summary(Bush.logit)
 ```
+[![sum12]({{ site.url }}/img/election_income/sum12.PNG)]({{ site.url }}/img/election_income/sum12.JPG)
+
 **_Summary Insights:_**
+
 logit[P(Bush)]= −1:27 + 0.298 × income
-where,\
+
+where,
+
 logit(x)=$\log_e \frac{x}{1-x}$
-To find P(Bush),inverting the logit:\
-$P(Bush)= \frac{e^y}{1+e^y}$where,\
+
+To find P(Bush),inverting the logit:
+
+$P(Bush)= \frac{e^y}{1+e^y}$ where,
+
 y=logit[P(Bush)]
 
 **“divide by 4”** rule 
@@ -142,6 +160,7 @@ library(boot)
 inv.logit(-1.27+0.298*4)
 inv.logit(-1.27+0.298*5)
 ```
+[![sum13]({{ site.url }}/img/election_income/sum13.PNG)]({{ site.url }}/img/election_income/sum13.JPG)
 
 # Weighted Regression
 The modern survey results are rarely a true simple random sample from the population. To adjust for groups being underrepresents or overrepresented in a sample,surveys results are weighted.
@@ -154,6 +173,8 @@ Bush.weighted.logit =glm(Republican ~ income,family =quasibinomial,
                          weights =survey.weights,data =ANES1992)
 summary(Bush.weighted.logit)
 ```
+[![sum14]({{ site.url }}/img/election_income/sum14.PNG)]({{ site.url }}/img/election_income/sum14.JPG)
+
 **Unweighted and weighted fits**
 ```{r}
 our.logit = function(x) {
@@ -171,8 +192,7 @@ ggplot(ANES1992,aes(x =income,y =Republican)) +
 
 The weighted and unweighted fits are nearly indistinguishable. This is quite often the case when creating regression models.
 
-## Fitting a series of regressions
-
+# Fitting a series of regressions
 Problem Statements:
 * Is the relationship similar between income and vote for every Presidential election? OR
 * Some elections are different? 
@@ -193,6 +213,8 @@ Function testing for year 1992 Bush-Clinton election:
 ```{r}
 logit.ANES.subset(my.year =1992,data =ANES.df)
 ```
+[![sum14]({{ site.url }}/img/election_income/sum14.PNG)]({{ site.url }}/img/election_income/sum14.JPG)
+
 The “estimate” is the same as the weighted regression. Let's apply for every Presidential Election from _1948 - 2012_
 ```{r}
 years =seq(1948,2012,4)
@@ -226,6 +248,8 @@ library(dplyr)
 summarise(group_by(ANES1992, income),
           weighted.mean(Republican,w =survey.weights,na.rm =TRUE))
 ```
+[![sum15]({{ site.url }}/img/election_income/sum15.PNG)]({{ site.url }}/img/election_income/sum15.JPG)
+
 Dropping "0" income category and subsetting data for each year.  
 ```{r}
 n =length(years)
@@ -269,7 +293,7 @@ ggplot(income.prop.long,
 * The big coefficient for 1964 (compared to the elections before and after) might be in part an artifact of the logit scale.
 * In 2008 there really was a big difference between income group, which is likely attributable to the financial crisis.
 
-connecting income groups by year
+**Connecting income groups by year**
 ```{r}
 ggplot(income.prop.long,
        aes(x =income.group,
@@ -277,7 +301,6 @@ ggplot(income.prop.long,
            group =year)) +geom_line()
 ```
 [![6]({{ site.url }}/img/election_income/6.PNG)]({{ site.url }}/img/election_income/6.JPG)
-
 There is big magnitude of the uptick in Republicanism for the highest income group for almost every year.
 
 Footnotes:
