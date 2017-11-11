@@ -1,8 +1,8 @@
 ---
 layout: post
 title: "Exploring police stops & arrests vs. ethnicity in NYC[1998-99]"
-subtitle: "Possoin Regression"
-tags: [R,Possoin Regression, ggplot2, GLM, count data]
+subtitle: "Poisson Regression"
+tags: [R,Poisson Regression, ggplot2, GLM, count data]
 gh-repo: rahulraghatate/Exploratory-Data-Analysis
 gh-badge: [star, fork, follow]
 permalink: /r/NYC_arrests_vs_ethnicity/
