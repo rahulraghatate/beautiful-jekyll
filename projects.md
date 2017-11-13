@@ -22,6 +22,8 @@ This is a collection of some personal/collaborative projects I've worked on.
 ### R Work
 
 - **[Analysis of National Identity](https://github.com/rahulraghatate/Exploratory-Data-Analysis/tree/master/Analysis%20of%20National%20Identity)**
+- **[Analysis of NYC Police Stops/Arrests against ethnicity](https://rahulraghatate.github.io/r/NYC_arrests_vs_ethnicity/)**
+- **[EDA of American Presidential Elections vs. income groups](https://rahulraghatate.github.io/r/election_income_based_statistics/)**
 - **[Time-series analysis of CH4 Emissions in Boston](https://github.com/rahulraghatate/Exploratory-Data-Analysis/tree/master/EDA-CH4%20emissions(time-series))**
 - **[Exploring Barley Yields(1927-1936) for anomaly detection](https://github.com/rahulraghatate/Exploratory-Data-Analysis/tree/master/EDA-Barley_Yield_Anamoly_Detection%5B1927-1936%5D)**
 - **[Multinomial Logistic Regression for Student Program Choice Prediction](https://github.com/rahulraghatate/Exploratory-Data-Analysis/tree/master/EDA-MLR_for_student_prog_choice_prediction)**
