@@ -38,7 +38,7 @@ This is a collection of some personal/collaborative projects I've worked on.
 ### Matlab
 
 - **[Bayesian Binary Decision Model](https://github.com/rahulraghatate/Machine-Learning/tree/master/Bayesian-Binary-Decision-Model)**
-- **
+- **[Image-Quantization-using-K-means-Algorithm](https://github.com/rahulraghatate/Image-Quantization-using-K-means-Algorithm)**
 
 ---
 
@@ -48,9 +48,19 @@ This is a collection of some personal/collaborative projects I've worked on.
 
 ---
 
+### Arduino
+
+- **[Automatic-Fare-Collection-System-Using-Near-Field-Communication](https://github.com/rahulraghatate/Automatic-Fare-Collection-System-Using-Near-Field-Communication)**
+
+---
+
 ### Technical Reports
 
 - **[CEPH - Distributed Storage System](https://github.com/rahulraghatate/sp17-i524/blob/master/paper1/S17-IR-2026/report.pdf)**
 - **[NAIAD - Microsoft's Distributed System based on computational model - "Timely dataflow"](https://github.com/rahulraghatate/sp17-i524/blob/master/paper2/S17-IR-2026/report.pdf)**
 - **[Overview of Apache Spark](https://github.com/rahulraghatate/sp17-i524/blob/master/paper2/S17-IR-2006/report.pdf)**
 - **[Machine_Learning_Case_Studies](https://github.com/rahulraghatate/Technical-Reports-Case-Studies/blob/master/Machine_Learning_Case_Study_Report.pdf)**
+
+### Publications
+
+- Paper on **[NFC Based Automatic-Fare-Collection-System](http://www.ijerd.com/paper/vol10-issue4/Version_2/C1042024.pdf)** published in **[IJERD Journal](http://www.ijerd.com/)**.
