@@ -19,3 +19,28 @@ normalize <- function(x) {
 
 maxmindf <- as.data.frame(lapply(mydata, normalize))
 ```
+
+
+### Box-Cox Transformation for Non-Normal Data
+
+Obtain a lambda value – that is the value at which the data is transformed into a normal shape.
+
+```{r}
+#Shapiro- Wilkey Test for normality check
+shapiro.test(Income)
+library(MASS)
+boxcoxreg1<-boxcox(reg1)
+summary(boxcoxreg1)
+
+bc<-boxcox(reg1,plotit=T)
+title("Lambda and Log-Likelihood")
+which.max(bc$y)
+
+(lambda<-bc$x[which.max(bc$y)])
+
+######## Example
+bc_transformed<-lm(I(Income^lambda)~Population,data=mydata)
+plot(bc_transformed,which=1)
+## Perform BP test for heteroskedasticity
+bptest(bc_transformed)
+```
