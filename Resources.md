@@ -44,3 +44,8 @@ plot(bc_transformed,which=1)
 ## Perform BP test for heteroskedasticity
 bptest(bc_transformed)
 ```
+
+
+
+#Time Series
+http://a-little-book-of-r-for-time-series.readthedocs.io/en/latest/src/timeseries.html
