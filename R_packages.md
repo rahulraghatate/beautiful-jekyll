@@ -32,3 +32,5 @@
   * ```forecast(fit,#no) ``` predict future values
   * ```fit<- ets(ts)```  # Automated forecasting using an exponential model
   * ```fit<- auto.arima(ts)``` # Automated forecasting using an ARIMA model
++ library(sem) #Confirmatory Factor Analysis
++ library(ca) #Correspondence Analysis
