@@ -12,4 +12,4 @@ https://www.statmethods.net/advstats/factor.html
 
 ## Structural Equation Modeling
 
-
+## Correspondence Analysis, Multiple CA, Joint CA
