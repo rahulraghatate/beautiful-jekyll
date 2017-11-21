@@ -6,3 +6,10 @@ http://www.deeplearningbook.org/
 
 ## Restricted Boltzman Machines
 https://github.com/meownoid/tensorfow-rbm
+
+## Factor Analysis (Exploratory, Confirmatory)
+https://www.statmethods.net/advstats/factor.html
+
+## Structural Equation Modeling
+
+
