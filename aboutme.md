@@ -10,7 +10,7 @@ I am pursuing my Masters in Data Science[2016-2018] at Indiana University and im
 Actively **seeking full-time opportunities** in Data Science/Analytics, Data Engineering, Quantitative Research, and Consulting.
 
 
-[**[Resume](https://drive.google.com/open?id=0B2K6NkS5WwfraVJzaGV2dE95LXM)**]  | [**[Cover Letter](https://drive.google.com/open?id=13_fvlnnSzdc4DHD7W30fwsg9By6JIeSL)**] | [**[Github Profile](https://github.com/rahulraghatate)**]
+[**[Resume](https://drive.google.com/open?id=0B2K6NkS5WwfraVJzaGV2dE95LXM)**]  | [**[Cover Letter](https://drive.google.com/open?id=13_fvlnnSzdc4DHD7W30fwsg9By6JIeSL)**] | [**[Github Profile](https://github.com/rahulraghatate)**] | [**[IBM ACCLAIM Profile](https://www.youracclaim.com/users/rahul-raghatate)**]
 
 The [Projects](https://rahulraghatate.github.io/projects/) and [Home](https://rahulraghatate.github.io/) page showcase some of my work.
 
@@ -51,6 +51,11 @@ The [Projects](https://rahulraghatate.github.io/projects/) and [Home](https://ra
 ### Tools/Skills
 
 • Unix • Python • R • Matlab • SAS • Tableau • Abinitio • Teradata • Spark • Ansible • Emacs • SQL • Tensorflow • Excel • ETL/EDW Management • Agile Methodology 
+
+### Awards and Honors
+
+- IBM Verified Skills Badges - Deep Learning, Hadoop, Statistics, Machine Learning, Big Data Foundations, Data Science Foundations
+- IBM Deep Skills Award for outstanding BI performance using Abinitio and Teradata for Data Warehousing.
 
 ### Contact Details
 
